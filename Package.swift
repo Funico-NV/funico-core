@@ -4,19 +4,19 @@
 import PackageDescription
 
 let package = Package(
-    name: "FunicoCore",
+    name: "funico-core",
+    platforms: [
+        .iOS(.v15), .macOS(.v12)
+    ],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "FunicoCore",
             targets: ["FunicoCore"]
         ),
     ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "FunicoCore"
+            name: "FunicoCore",
         ),
         .testTarget(
             name: "FunicoCoreTests",
