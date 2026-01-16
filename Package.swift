@@ -16,7 +16,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "FunicoCore",
+            name: "FunicoCore"
         ),
         .testTarget(
             name: "FunicoCoreTests",
