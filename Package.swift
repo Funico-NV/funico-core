@@ -12,7 +12,7 @@ let package = Package(
         .library(
             name: "FunicoCore",
             targets: ["FunicoCore"]
-        ),
+        )
     ],
     targets: [
         .target(
@@ -21,6 +21,6 @@ let package = Package(
         .testTarget(
             name: "FunicoCoreTests",
             dependencies: ["FunicoCore"]
-        ),
+        )
     ]
 )
