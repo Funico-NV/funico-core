@@ -12,12 +12,16 @@ struct ArticleTests {
     
     @Test("Title for article '40315K'")
     func title_40315K() {
-        #expect(Article("40315", part: .head).title == "40315K")
+        let article: Article = Article("40315", part: .head)
+        
+        #expect(article.title == "40315K")
     }
     
     @Test("Title for article '40288RD-A'")
     func title_40288RD_A() {
-        #expect(Article("40288", part: .rthigh, quality: .A).title == "40288RD-A")
+        let article: Article = Article("40288", part: .rthigh, quality: .A)
+        
+        #expect(article.title == "40288RD-A")
     }
     
     @Test("Initialize from string literal '40315K'")
