@@ -28,7 +28,7 @@ public struct Article: Codable {
     }
     public var length: Float?
     
-    public init(_ itemId: String, part: Part? = nil, quality: Quality? = nil, length: Float? = nil) {
+    fileprivate init(itemId: String, part: Part?, quality: Quality?, length: Float?) {
         self.itemId = itemId
         self._part = part?.codable
         self.part = part
@@ -37,15 +37,14 @@ public struct Article: Codable {
         self.length = length
     }
     
+    public init(_ itemId: String, part: Part? = nil, quality: Quality? = nil, length: Float? = nil) {
+        self.init(itemId: itemId, part: part, quality: quality, length: length)
+    }
+    
     public init?(_ itemId: String?, part: Part? = nil, quality: Quality? = nil, length: Float? = nil) {
         guard let itemId else { return nil }
         
-        self.itemId = itemId
-        self._part = part?.codable
-        self.part = part
-        self._quality = quality?.codable
-        self.quality = quality
-        self.length = length
+        self.init(itemId: itemId, part: part, quality: quality, length: length)
     }
     
     public init(from decoder: Decoder) throws {
@@ -64,6 +63,45 @@ public struct Article: Codable {
         try container.encodeIfPresent(_part, forKey: ._part)
         try container.encodeIfPresent(_quality, forKey: ._quality)
         try container.encodeIfPresent(length, forKey: .length)
+    }
+}
+
+extension Article: ExpressibleByStringLiteral, ExpressibleByIntegerLiteral {
+    
+    public init(stringLiteral value: StringLiteralType) {
+        let trimmed = value.trimmingCharacters(in: .whitespaces)
+        let lengthSplit = trimmed.split(separator: "|", maxSplits: 1, omittingEmptySubsequences: false)
+        let itemString = lengthSplit.first.map { $0.trimmingCharacters(in: .whitespaces) } ?? ""
+        let lengthComponent = lengthSplit.count > 1
+        ? Float(lengthSplit[1].trimmingCharacters(in: .whitespaces))
+        : nil
+        
+        let qualitySplit = itemString.split(separator: "-", maxSplits: 1, omittingEmptySubsequences: false)
+        let itemPartString = qualitySplit.first.map { $0.trimmingCharacters(in: .whitespaces) } ?? ""
+        let qualityString = qualitySplit.count > 1
+        ? String(qualitySplit[1].trimmingCharacters(in: .whitespaces))
+        : nil
+        
+        var itemIdComponent = itemPartString
+        let partComponent: Part? = Part.allCases.first(where: { itemIdComponent.hasSuffix($0.reference) })
+        if let part = partComponent { itemIdComponent = String(itemIdComponent.dropLast(part.reference.count)) }
+        let qualityComponent: Quality? = Quality(reference: qualityString)
+        
+        if let partComponent, let qualityComponent {
+            self.init(itemId: itemIdComponent, part: partComponent, quality: qualityComponent, length: lengthComponent)
+        } else
+        if let partComponent {
+            self.init(itemId: itemIdComponent, part: partComponent, quality: nil, length: lengthComponent)
+        } else
+        if let qualityComponent {
+            self.init(itemId: itemIdComponent, part: nil, quality: qualityComponent, length: lengthComponent)
+        } else {
+            self.init(itemId: itemString, part: nil, quality: nil, length: lengthComponent)
+        }
+    }
+    
+    public init(integerLiteral value: IntegerLiteralType) {
+        self.init(itemId: String(value), part: nil, quality: nil, length: nil)
     }
 }
 
@@ -122,9 +160,9 @@ public extension Article {
     }
 }
 
-public extension Article {
+extension Article: Titleable {
     
-    func title(length showLength: Bool = false) -> String {
+    public func title(length showLength: Bool = false) -> String {
         if let part, let quality {
             return itemId + part.reference + "-" + quality.title
         } else if let part {
@@ -138,9 +176,19 @@ public extension Article {
         }
     }
     
-    var title: String {
+    public var title: String {
         return title()
     }
+}
+
+extension Article: CustomDebugStringConvertible {
+    
+    public var debugDescription: String {
+        "<\(title)>: Article(itemId: \(itemId.debugDescription), part: \(part?.reference, default: "nil"), quality: \(quality?.reference, default: "nil"), length: \(length, default: "nil"))"
+    }
+}
+
+public extension Article {
     
     var item: String {
         if let part {

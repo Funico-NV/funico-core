@@ -86,9 +86,15 @@ public extension Part {
     
     init?(reference: String?) {
         guard let reference else { return nil }
-        guard let firstReferenceMatch = Self.allCases.first(where: { $0.reference == reference }) else { return nil }
-        
-        self = firstReferenceMatch
+        switch reference.uppercased() {
+        case "K": self = .head
+        case "LD": self = .lthigh
+        case "LS": self = .lshoulder
+        case "RD": self = .rthigh
+        case "RS": self = .rshoulder
+        case "V": self = .foot
+        default: return nil
+        }
     }
     
     /// An uppercase reference of the `Part`.

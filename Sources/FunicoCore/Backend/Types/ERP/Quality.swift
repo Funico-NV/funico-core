@@ -110,6 +110,42 @@ extension Quality: Titleable {
 
 public extension Quality {
     
+    init?(reference: String?) {
+        guard let reference else { return nil }
+        switch reference.uppercased() {
+        case "A": self = .A
+        case "B": self = .B
+        case "C": self = .C
+        case "RA": self = .RA
+        case "RB": self = .RB
+        case "RC": self = .RC
+        case "AD": self = .AD
+        case "AK": self = .AK
+        case "BD": self = .BD
+        case "BK": self = .BK
+        default: return nil
+        }
+    }
+    
+    /// An uppercase reference of the `Quality`.
+    var reference: String {
+        switch self {
+        case .A: "A"
+        case .B: "B"
+        case .C: "C"
+        case .RA: "RA"
+        case .RB: "RB"
+        case .RC: "RC"
+        case .AD: "AD"
+        case .AK: "AK"
+        case .BD: "BD"
+        case .BK: "BK"
+        }
+    }
+}
+
+public extension Quality {
+    
     var lower: Quality? {
         switch self {
         case .A: .B
