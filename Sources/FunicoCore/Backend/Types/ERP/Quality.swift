@@ -27,7 +27,7 @@ extension Quality: Sendable {}
 
 extension Quality: APIEnum {
     
-    public typealias CodableType = String
+    public typealias APIValue = String
     
     public init(id: String) throws {
         switch id {
@@ -59,8 +59,8 @@ extension Quality: APIEnum {
         }
     }
     
-    public init(codable: String) throws {
-        switch codable {
+    public init(apiValue: String) throws {
+        switch apiValue {
         case "A": self = .A
         case "B": self = .B
         case "C": self = .C
@@ -71,10 +71,10 @@ extension Quality: APIEnum {
         case "AK": self = .AK
         case "BD": self = .BD
         case "BK": self = .BK
-        default: throw APIEnumError.invalidCodable(codable, apiEnum: Self.self)
+        default: throw APIEnumError.invalidApiValue(apiValue, apiEnum: Self.self)
         }
     }
-    public var codable: String {
+    public var apiValue: String {
         switch self {
         case .A: "A"
         case .B: "B"

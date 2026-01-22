@@ -14,25 +14,25 @@ public struct Article: Codable {
     public var part: Part? {
         get {
             guard let _part else { return nil }
-            return try? Part(codable: _part)
+            return try? Part(apiValue: _part)
         }
-        set { _part = newValue?.codable }
+        set { _part = newValue?.apiValue }
     }
     private(set) var _quality: String?
     public var quality: Quality? {
         get {
             guard let _quality else { return nil }
-            return try? Quality(codable: _quality)
+            return try? Quality(apiValue: _quality)
         }
-        set { _quality = newValue?.codable }
+        set { _quality = newValue?.apiValue }
     }
     public var length: Float?
     
     fileprivate init(itemId: String, part: Part?, quality: Quality?, length: Float?) {
         self.itemId = itemId
-        self._part = part?.codable
+        self._part = part?.apiValue
         self.part = part
-        self._quality = quality?.codable
+        self._quality = quality?.apiValue
         self.quality = quality
         self.length = length
     }

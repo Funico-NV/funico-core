@@ -24,7 +24,7 @@ extension Pool: Sendable {}
 
 extension Pool: APIEnum {
     
-    public typealias CodableType = Int
+    public typealias APIValue = Int
     
     public init(id: String) throws {
         switch id {
@@ -54,8 +54,8 @@ extension Pool: APIEnum {
         }
     }
     
-    public init(codable: Int) throws {
-        switch codable {
+    public init(apiValue: Int) throws {
+        switch apiValue {
         case 1: self = .finishedEndProducts
         case 2: self = .sprayedEndProducts
         case 3: self = .assembledItems
@@ -65,10 +65,10 @@ extension Pool: APIEnum {
         case 7: self = .unfinishedSemiFinishedProducts
         case 8: self = .roughWood
         case 9: self = .productionIndicators
-        default: throw APIEnumError.invalidCodable(codable, apiEnum: Self.self)
+        default: throw APIEnumError.invalidApiValue(apiValue, apiEnum: Self.self)
         }
     }
-    public var codable: Int {
+    public var apiValue: Int {
         switch self {
         case .finishedEndProducts: 1
         case .sprayedEndProducts: 2
@@ -103,12 +103,12 @@ extension Pool: Titleable {
 public extension Pool {
     
     var pool: Int {
-        self.codable
+        self.apiValue
     }
     
     init?(pool: Int?) {
         guard let pool else { return nil }
-        try? self.init(codable: pool)
+        try? self.init(apiValue: pool)
     }
 }
 

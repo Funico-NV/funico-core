@@ -20,7 +20,7 @@ extension ManufactureLevel: Sendable {}
 
 extension ManufactureLevel: APIEnum {
     
-    public typealias CodableType = Int
+    public typealias APIValue = Int
     
     public init(id: String) throws {
         switch id {
@@ -42,17 +42,17 @@ extension ManufactureLevel: APIEnum {
         }
     }
     
-    public init(codable: Int) throws {
-        switch codable {
+    public init(apiValue: Int) throws {
+        switch apiValue {
         case 0: self = .manufactureLevel_4HLF
         case 1: self = .manufactureLevel_5HLF
         case 2: self = .manufactureLevel_5PRF
         case 3: self = .manufactureLevel_6HLF
         case 4: self = .manufactureLevel_8HLF
-        default: throw APIEnumError.invalidCodable(codable, apiEnum: Self.self)
+        default: throw APIEnumError.invalidApiValue(apiValue, apiEnum: Self.self)
         }
     }
-    public var codable: Int {
+    public var apiValue: Int {
         switch self {
         case .manufactureLevel_4HLF: 0
         case .manufactureLevel_5HLF: 1
@@ -92,25 +92,25 @@ public extension ManufactureLevel {
 extension ManufactureLevel: Equatable, Comparable, Strideable {
     
     public static func == (lhs: ManufactureLevel, rhs: ManufactureLevel) -> Bool {
-        return lhs.codable == rhs.codable
+        return lhs.apiValue == rhs.apiValue
     }
     
     public static func < (lhs: ManufactureLevel, rhs: ManufactureLevel) -> Bool {
-        return lhs.codable < rhs.codable
+        return lhs.apiValue < rhs.apiValue
     }
     
     public static func > (lhs: ManufactureLevel, rhs: ManufactureLevel) -> Bool {
-        return lhs.codable > rhs.codable
+        return lhs.apiValue > rhs.apiValue
     }
     
     public func advanced(by n: Int) -> ManufactureLevel {
-        var result = self.codable
+        var result = self.apiValue
         result += n
-        return (try? ManufactureLevel(codable: result)) ?? ManufactureLevel.lowest
+        return (try? ManufactureLevel(apiValue: result)) ?? ManufactureLevel.lowest
     }
     
     public func distance(to other: ManufactureLevel) -> Int {
-        return other.codable - self.codable
+        return other.apiValue - self.apiValue
     }
 }
 

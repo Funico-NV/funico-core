@@ -7,10 +7,10 @@
 
 import Foundation
 
-public enum APIEnumError<CodableType: Codable & Equatable & CustomStringConvertible & Sendable, T: APIEnum>: Error {
+public enum APIEnumError<APIValue: Codable & Equatable & CustomStringConvertible & Sendable, T: APIEnum>: Error {
     
-    case invalidId(_ id: CodableType, apiEnum: T.Type)
-    case invalidCodable(_ codable: CodableType, apiEnum: T.Type)
+    case invalidId(_ id: APIValue, apiEnum: T.Type)
+    case invalidApiValue(_ apiValue: APIValue, apiEnum: T.Type)
 }
 
 extension APIEnumError: LocalizedError {
@@ -18,7 +18,7 @@ extension APIEnumError: LocalizedError {
     public var errorCode: Int {
         switch self {
         case .invalidId: 1
-        case .invalidCodable: 2
+        case .invalidApiValue: 2
         }
     }
     
@@ -26,8 +26,8 @@ extension APIEnumError: LocalizedError {
         switch self {
         case .invalidId(let id, let apiEnum):
             "The id '\(id.description)' is invalid for the enum '\(String(describing: apiEnum))'."
-        case .invalidCodable(let codable, let apiEnum):
-            "The codable '\(codable.description)' is invalid for the enum '\(String(describing: apiEnum))'."
+        case .invalidApiValue(let apiValue, let apiEnum):
+            "The apiValue '\(apiValue.description)' is invalid for the enum '\(String(describing: apiEnum))'."
         }
     }
 }

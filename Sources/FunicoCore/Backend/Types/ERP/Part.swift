@@ -21,7 +21,7 @@ extension Part: Sendable {}
 
 extension Part: APIEnum {
     
-    public typealias CodableType = String
+    public typealias APIValue = String
     
     public init(id: String) throws {
         switch id {
@@ -45,18 +45,18 @@ extension Part: APIEnum {
         }
     }
     
-    public init(codable: String) throws {
-        switch codable {
+    public init(apiValue: String) throws {
+        switch apiValue {
         case "K": self = .head
         case "LD": self = .lthigh
         case "LS": self = .lshoulder
         case "RD": self = .rthigh
         case "RS": self = .rshoulder
         case "V": self = .foot
-        default: throw APIEnumError.invalidCodable(codable, apiEnum: Self.self)
+        default: throw APIEnumError.invalidApiValue(apiValue, apiEnum: Self.self)
         }
     }
-    public var codable: String {
+    public var apiValue: String {
         switch self {
         case .head: "K"
         case .lthigh: "LD"

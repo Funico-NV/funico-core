@@ -7,8 +7,8 @@
 
 public protocol Articlable {
     
-    typealias RawPart = Part.CodableType
-    typealias RawQuality = Quality.CodableType
+    typealias RawPart = Part.APIValue
+    typealias RawQuality = Quality.APIValue
     
     var _itemId: String { get }
     var _part: RawPart? { get }
@@ -19,8 +19,8 @@ public protocol Articlable {
 public extension Articlable {
     
     var article: Article {
-        let part: Part? = _part.flatMap({ try? Part(codable: $0) })
-        let quality: Quality? = _quality.flatMap({ try? Quality(codable: $0) })
+        let part: Part? = _part.flatMap({ try? Part(apiValue: $0) })
+        let quality: Quality? = _quality.flatMap({ try? Quality(apiValue: $0) })
         
         return Article(_itemId, part: part, quality: quality, length: _length)
     }

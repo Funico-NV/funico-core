@@ -7,13 +7,13 @@
 
 public protocol APIEnum: RawRepresentable<String>, Codable, Identifiable<String>, Hashable, Sendable {
     
-    associatedtype CodableType: Codable, Equatable, CustomStringConvertible
+    associatedtype APIValue: Codable, Equatable, CustomStringConvertible
     
     init(id: String) throws
-    init(codable: CodableType) throws
+    init(apiValue: APIValue) throws
     
     var id: String { get }
-    var codable: CodableType { get }
+    var apiValue: APIValue { get }
     
     var rawValue: String { get }
     init?(rawValue: String)
