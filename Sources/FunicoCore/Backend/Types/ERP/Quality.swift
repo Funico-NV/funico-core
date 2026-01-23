@@ -92,16 +92,16 @@ extension Quality: Titleable {
     
     public var title: String {
         switch self {
-        case .A: "A"
-        case .B: "B"
-        case .C: "C"
-        case .RA: "RA"
-        case .RB: "RB"
-        case .RC: "RC"
-        case .AD: "AD"
-        case .AK: "AK"
-        case .BD: "BD"
-        case .BK: "BK"
+        case .A: String(localized: "A")
+        case .B: String(localized: "B")
+        case .C: String(localized: "C")
+        case .RA: String(localized: "RA")
+        case .RB: String(localized: "RB")
+        case .RC: String(localized: "RC")
+        case .AD: String(localized: "AD")
+        case .AK: String(localized: "AK")
+        case .BD: String(localized: "BD")
+        case .BK: String(localized: "BK")
         }
     }
 }

@@ -102,11 +102,11 @@ extension ManufactureLevel: Titleable {
     
     public var title: String {
         switch self {
-        case .manufactureLevel_4HLF: String("4HLF")
-        case .manufactureLevel_5HLF: String("5HLF")
-        case .manufactureLevel_5PRF: String("5PRF")
-        case .manufactureLevel_6HLF: String("6HLF")
-        case .manufactureLevel_8HLF: String("8HLF")
+        case .manufactureLevel_4HLF: String(localized: "4HLF")
+        case .manufactureLevel_5HLF: String(localized: "5HLF")
+        case .manufactureLevel_5PRF: String(localized: "5PRF")
+        case .manufactureLevel_6HLF: String(localized: "6HLF")
+        case .manufactureLevel_8HLF: String(localized: "8HLF")
         }
     }
 }

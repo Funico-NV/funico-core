@@ -93,14 +93,14 @@ extension OrderStatus: Titleable {
     
     public var title: String {
         switch self {
-        case .created: String(localized: "Created", table: "OrderStatus")
-        case .estimated: String(localized: "Estimated", table: "OrderStatus")
-        case .planned: String(localized: "Planned", table: "OrderStatus")
-        case .released: String(localized: "Released", table: "OrderStatus")
-        case .started: String(localized: "Started", table: "OrderStatus")
-        case .completed: String(localized: "Completed", table: "OrderStatus")
-        case .calculated: String(localized: "Calculated", table: "OrderStatus")
-        case .terminated: String(localized: "Terminated", table: "OrderStatus")
+        case .created: String(localized: "Created")
+        case .estimated: String(localized: "Estimated")
+        case .planned: String(localized: "Planned")
+        case .released: String(localized: "Released")
+        case .started: String(localized: "Started")
+        case .completed: String(localized: "Completed")
+        case .calculated: String(localized: "Calculated")
+        case .terminated: String(localized: "Terminated")
         }
     }
 }

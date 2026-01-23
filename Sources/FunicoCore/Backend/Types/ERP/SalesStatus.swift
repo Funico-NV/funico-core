@@ -71,10 +71,10 @@ extension SalesStatus: Titleable {
     
     public var title: String {
         switch self {
-        case .pending: String(localized: "Pending", table: "SalesStatus")
-        case .delivered: String(localized: "Delivered", table: "SalesStatus")
-        case .invoiced: String(localized: "Invoiced", table: "SalesStatus")
-        case .cancelled: String(localized: "Cancelled", table: "SalesStatus")
+        case .pending: String(localized: "Pending")
+        case .delivered: String(localized: "Delivered")
+        case .invoiced: String(localized: "Invoiced")
+        case .cancelled: String(localized: "Cancelled")
         }
     }
 }

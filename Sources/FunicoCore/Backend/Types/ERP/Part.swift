@@ -68,12 +68,12 @@ extension Part: Titleable {
     
     public var title: String {
         switch self {
-        case .head: String("Head")
-        case .lthigh: String("Left Thigh")
-        case .lshoulder: String("Left Shoulder")
-        case .rthigh: String("Right Thigh")
-        case .rshoulder: String("Right Shoulder")
-        case .foot: String("Foot")
+        case .head: String(localized: "Head")
+        case .lthigh: String(localized: "Left Thigh")
+        case .lshoulder: String(localized: "Left Shoulder")
+        case .rthigh: String(localized: "Right Thigh")
+        case .rshoulder: String(localized: "Right Shoulder")
+        case .foot: String(localized: "Foot")
         }
     }
 }

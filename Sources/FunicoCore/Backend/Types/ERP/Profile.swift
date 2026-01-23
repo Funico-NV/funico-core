@@ -105,18 +105,18 @@ extension Profile: Titleable {
     
     public var title: String {
         switch self {
-        case .pan: String(localized: "PAN", table: "Profile")
-        case .mou: String(localized: "MOU", table: "Profile")
-        case .kad: String(localized: "KAD", table: "Profile")
-        case .bod: String(localized: "BOD", table: "Profile")
-        case .bov: String(localized: "BOV", table: "Profile")
-        case .krs: String(localized: "KRS", table: "Profile")
-        case .khk: String(localized: "KHK", table: "Profile")
-        case .kht: String(localized: "KHT", table: "Profile")
-        case .plint: String(localized: "PLI", table: "Profile")
-        case .lijst: String(localized: "LST", table: "Profile")
-        case .lat: String(localized: "LAT", table: "Profile")
-        case .bovenregel: String(localized: "BRG", table: "Profile")
+        case .pan: String(localized: "PAN")
+        case .mou: String(localized: "MOU")
+        case .kad: String(localized: "KAD")
+        case .bod: String(localized: "BOD")
+        case .bov: String(localized: "BOV")
+        case .krs: String(localized: "KRS")
+        case .khk: String(localized: "KHK")
+        case .kht: String(localized: "KHT")
+        case .plint: String(localized: "PLI")
+        case .lijst: String(localized: "LST")
+        case .lat: String(localized: "LAT")
+        case .bovenregel: String(localized: "BRG")
         }
     }
 }

@@ -156,27 +156,27 @@ extension ItemGroup: Titleable {
     
     public var title: String {
         switch self {
-        case .KIST: "KIST"
-        case .KIST_HAND: "KIST HAND"
-        case .HOL: "HOL"
-        case .ITA: "ITA"
-        case .URNES: "URNES"
-        case .CEREMONIE: "CEREMONIE"
-        case .ONDERBAK: "ONDERBAK"
-        case .DEKSELS: "DEKSELS"
-        case .PANELEN: "PANELEN"
-        case .MOULUREN: "MOULUREN"
-        case .PLATTE_KAD: "PLATTE KAD"
-        case .KADERS: "KADERS"
-        case .BODEMS: "BODEMS"
-        case .BOVENBLAD: "BOVENBLAD"
-        case .PLINTEN: "PLINTEN"
-        case .PROFIELEN: "PROFIELEN"
-        case .HALFFABAF: "HALFFABAF"
-        case .HALFFABON: "HALFFABON"
-        case .DIV_AAN: "DIV AAN"
-        case .DIV_EF: "DIV EF"
-        case .GROND: "GROND"
+        case .KIST: String(localized: "KIST")
+        case .KIST_HAND: String(localized: "KIST HAND")
+        case .HOL: String(localized: "HOL")
+        case .ITA: String(localized: "ITA")
+        case .URNES: String(localized: "URNES")
+        case .CEREMONIE: String(localized: "CEREMONIE")
+        case .ONDERBAK: String(localized: "ONDERBAK")
+        case .DEKSELS: String(localized: "DEKSELS")
+        case .PANELEN: String(localized: "PANELEN")
+        case .MOULUREN: String(localized: "MOULUREN")
+        case .PLATTE_KAD: String(localized: "PLATTE KAD")
+        case .KADERS: String(localized: "KADERS")
+        case .BODEMS: String(localized: "BODEMS")
+        case .BOVENBLAD: String(localized: "BOVENBLAD")
+        case .PLINTEN: String(localized: "PLINTEN")
+        case .PROFIELEN: String(localized: "PROFIELEN")
+        case .HALFFABAF: String(localized: "HALFFABAF")
+        case .HALFFABON: String(localized: "HALFFABON")
+        case .DIV_AAN: String(localized: "DIV AAN")
+        case .DIV_EF: String(localized: "DIV EF")
+        case .GROND: String(localized: "GROND")
         }
     }
 }

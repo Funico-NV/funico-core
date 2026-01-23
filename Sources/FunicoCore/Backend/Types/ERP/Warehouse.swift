@@ -60,10 +60,10 @@ extension Warehouse: Titleable {
     
     public var title: String {
         switch self {
-        case .DEM: "DEM"
-        case .FUN: "FUN"
-        case .LOT: "LOT"
-        case .STEP: "STEP"
+        case .DEM: String(localized: "DEM")
+        case .FUN: String(localized: "FUN")
+        case .LOT: String(localized: "LOT")
+        case .STEP: String(localized: "STEP")
         }
     }
 }

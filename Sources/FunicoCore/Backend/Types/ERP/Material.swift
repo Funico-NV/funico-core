@@ -135,25 +135,25 @@ extension Material: Titleable {
     
     public var title: String {
         switch self {
-        case .EIK: "EIK"
-        case .EIKBODEM: "EIKBODEM"
-        case .EIKFRANS: "EIKFRANS"
-        case .EIKROOD: "EIKROOD"
-        case .EIKRUSTIEK: "EIKRUSTIEK"
-        case .DEN: "DEN"
-        case .FINEER: "FINEER"
-        case .KUNSTSTOF: "KUNSTSTOF"
-        case .METAAL: "METAAL"
-        case .PINE: "PINE"
-        case .PINMARITIME: "PIN MARITIME"
-        case .PLAATMATERIAAL: "PLAATMATER"
-        case .POPULIER: "POPULIER"
-        case .PRINT: "PRINT"
-        case .TROPISCH: "TROPISCH"
-        case .ZINK: "ZINK"
-        case .INHEEMS: "INHEEMS"
-        case .LANGLOPEND: "LANGLOPEND"
-        case .THANA: "THANA"
+        case .EIK: String(localized: "EIK")
+        case .EIKBODEM: String(localized: "EIKBODEM")
+        case .EIKFRANS: String(localized: "EIKFRANS")
+        case .EIKROOD: String(localized: "EIKROOD")
+        case .EIKRUSTIEK: String(localized: "EIKRUSTIEK")
+        case .DEN: String(localized: "DEN")
+        case .FINEER: String(localized: "FINEER")
+        case .KUNSTSTOF: String(localized: "KUNSTSTOF")
+        case .METAAL: String(localized: "METAAL")
+        case .PINE: String(localized: "PINE")
+        case .PINMARITIME: String(localized: "PIN MARITIME")
+        case .PLAATMATERIAAL: String(localized: "PLAATMATER")
+        case .POPULIER: String(localized: "POPULIER")
+        case .PRINT: String(localized: "PRINT")
+        case .TROPISCH: String(localized: "TROPISCH")
+        case .ZINK: String(localized: "ZINK")
+        case .INHEEMS: String(localized: "INHEEMS")
+        case .LANGLOPEND: String(localized: "LANGLOPEND")
+        case .THANA: String(localized: "THANA")
         }
     }
 }
