@@ -5,9 +5,7 @@
 //  Created by Damian Van de Kauter on 24/12/2025.
 //
 
-import Foundation
-
-public enum ManufactureLevel: CaseIterable {
+public enum ManufactureLevel {
     
     case manufactureLevel_4HLF
     case manufactureLevel_5HLF
@@ -18,9 +16,46 @@ public enum ManufactureLevel: CaseIterable {
 
 extension ManufactureLevel: Sendable {}
 
-extension ManufactureLevel: APIEnum {
+extension ManufactureLevel: CaseIterable {}
+
+extension ManufactureLevel: Equatable, Comparable, Strideable {
     
-    public typealias APIValue = Int
+    public static func == (lhs: ManufactureLevel, rhs: ManufactureLevel) -> Bool {
+        return lhs.apiValue == rhs.apiValue
+    }
+    
+    public static func < (lhs: ManufactureLevel, rhs: ManufactureLevel) -> Bool {
+        return lhs.apiValue < rhs.apiValue
+    }
+    
+    public static func > (lhs: ManufactureLevel, rhs: ManufactureLevel) -> Bool {
+        return lhs.apiValue > rhs.apiValue
+    }
+    
+    public func advanced(by n: Int) -> ManufactureLevel {
+        let cases = Array(ManufactureLevel.allCases)
+        guard let idx = cases.firstIndex(of: self)
+        else { return .lowest }
+        
+        let newIdx = idx + n
+        if newIdx < 0 || newIdx >= cases.count {
+            return .highest
+        } else {
+            return cases[newIdx]
+        }
+    }
+    
+    public func distance(to other: ManufactureLevel) -> Int {
+        let cases = Array(ManufactureLevel.allCases)
+        guard let idxSelf = cases.firstIndex(of: self),
+              let idxOther = cases.firstIndex(of: other)
+        else { return 0 }
+        
+        return idxOther - idxSelf
+    }
+}
+
+extension ManufactureLevel: APIEnum {
     
     public init(id: String) throws {
         switch id {
@@ -42,23 +77,23 @@ extension ManufactureLevel: APIEnum {
         }
     }
     
-    public init(apiValue: Int) throws {
+    public init(apiValue: String) throws {
         switch apiValue {
-        case 0: self = .manufactureLevel_4HLF
-        case 1: self = .manufactureLevel_5HLF
-        case 2: self = .manufactureLevel_5PRF
-        case 3: self = .manufactureLevel_6HLF
-        case 4: self = .manufactureLevel_8HLF
+        case "4HLF": self = .manufactureLevel_4HLF
+        case "5HLF": self = .manufactureLevel_5HLF
+        case "5PRF": self = .manufactureLevel_5PRF
+        case "6HLF": self = .manufactureLevel_6HLF
+        case "8HLF": self = .manufactureLevel_8HLF
         default: throw APIEnumError.invalidApiValue(apiValue, apiEnum: Self.self)
         }
     }
-    public var apiValue: Int {
+    public var apiValue: String {
         switch self {
-        case .manufactureLevel_4HLF: 0
-        case .manufactureLevel_5HLF: 1
-        case .manufactureLevel_5PRF: 2
-        case .manufactureLevel_6HLF: 3
-        case .manufactureLevel_8HLF: 4
+        case .manufactureLevel_4HLF: "4HLF"
+        case .manufactureLevel_5HLF: "5HLF"
+        case .manufactureLevel_5PRF: "5PRF"
+        case .manufactureLevel_6HLF: "6HLF"
+        case .manufactureLevel_8HLF: "8HLF"
         }
     }
 }
@@ -89,31 +124,6 @@ public extension ManufactureLevel {
     }
 }
 
-extension ManufactureLevel: Equatable, Comparable, Strideable {
-    
-    public static func == (lhs: ManufactureLevel, rhs: ManufactureLevel) -> Bool {
-        return lhs.apiValue == rhs.apiValue
-    }
-    
-    public static func < (lhs: ManufactureLevel, rhs: ManufactureLevel) -> Bool {
-        return lhs.apiValue < rhs.apiValue
-    }
-    
-    public static func > (lhs: ManufactureLevel, rhs: ManufactureLevel) -> Bool {
-        return lhs.apiValue > rhs.apiValue
-    }
-    
-    public func advanced(by n: Int) -> ManufactureLevel {
-        var result = self.apiValue
-        result += n
-        return (try? ManufactureLevel(apiValue: result)) ?? ManufactureLevel.lowest
-    }
-    
-    public func distance(to other: ManufactureLevel) -> Int {
-        return other.apiValue - self.apiValue
-    }
-}
-
 public extension ManufactureLevel {
     
     static let matchableLevels = ManufactureLevel.manufactureLevel_4HLF...ManufactureLevel.manufactureLevel_5HLF
@@ -126,7 +136,7 @@ public extension ManufactureLevel {
     static let highest = ManufactureLevel.manufactureLevel_8HLF
 }
 
-extension ManufactureLevel {
+public extension ManufactureLevel {
     
     var lowerLevel: ManufactureLevel? {
         switch self {

@@ -5,9 +5,7 @@
 //  Created by Damian Van de Kauter on 24/12/2025.
 //
 
-import Foundation
-
-public enum Pool: CaseIterable {
+public enum Pool {
     
     case finishedEndProducts
     case sprayedEndProducts
@@ -22,9 +20,9 @@ public enum Pool: CaseIterable {
 
 extension Pool: Sendable {}
 
+extension Pool: CaseIterable {}
+
 extension Pool: APIEnum {
-    
-    public typealias APIValue = Int
     
     public init(id: String) throws {
         switch id {

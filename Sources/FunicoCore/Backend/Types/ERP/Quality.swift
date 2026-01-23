@@ -5,9 +5,7 @@
 //  Created by Damian Van de Kauter on 24/12/2025.
 //
 
-import Foundation
-
-public enum Quality: CaseIterable {
+public enum Quality {
     
     case A
     case B
@@ -25,9 +23,9 @@ public enum Quality: CaseIterable {
 
 extension Quality: Sendable {}
 
+extension Quality: CaseIterable {}
+
 extension Quality: APIEnum {
-    
-    public typealias APIValue = String
     
     public init(id: String) throws {
         switch id {

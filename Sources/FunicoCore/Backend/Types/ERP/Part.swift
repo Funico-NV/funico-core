@@ -5,8 +5,6 @@
 //  Created by Damian Van de Kauter on 24/12/2025.
 //
 
-import Foundation
-
 public enum Part: CaseIterable {
     
     case head
@@ -20,8 +18,6 @@ public enum Part: CaseIterable {
 extension Part: Sendable {}
 
 extension Part: APIEnum {
-    
-    public typealias APIValue = String
     
     public init(id: String) throws {
         switch id {
