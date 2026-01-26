@@ -42,7 +42,7 @@ extension Part: APIEnum {
     }
     
     public init(apiValue: String) throws {
-        switch apiValue {
+        switch apiValue.uppercased() {
         case "K": self = .head
         case "LD": self = .lthigh
         case "LS": self = .lshoulder

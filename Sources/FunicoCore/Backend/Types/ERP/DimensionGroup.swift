@@ -74,7 +74,7 @@ extension DimensionGroup: APIEnum {
     }
     
     public init(apiValue: String) throws {
-        switch apiValue {
+        switch apiValue.uppercased() {
         case "10": self = .M
         case "11": self = .M_L_1
         case "20": self = .M_C

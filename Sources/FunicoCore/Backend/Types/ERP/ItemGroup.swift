@@ -100,7 +100,7 @@ extension ItemGroup: APIEnum {
     }
     
     public init(apiValue: String) throws {
-        switch apiValue {
+        switch apiValue.uppercased() {
         case "KIST": self = .KIST
         case "KIST HAND": self = .KIST_HAND
         case "HOL": self = .HOL

@@ -78,7 +78,7 @@ extension ManufactureLevel: APIEnum {
     }
     
     public init(apiValue: String) throws {
-        switch apiValue {
+        switch apiValue.uppercased() {
         case "4HLF": self = .manufactureLevel_4HLF
         case "5HLF": self = .manufactureLevel_5HLF
         case "5PRF": self = .manufactureLevel_5PRF

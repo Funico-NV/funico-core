@@ -83,7 +83,7 @@ extension Material: APIEnum {
     }
     
     public init(apiValue: String) throws {
-        switch apiValue {
+        switch apiValue.uppercased() {
         case "EIK": self = .EIK
         case "EIKBODEM": self = .EIKBODEM
         case "EIKFRANS": self = .EIKFRANS

@@ -67,7 +67,7 @@ extension Profile: APIEnum {
     }
     
     public init(apiValue: String) throws {
-        switch apiValue {
+        switch apiValue.uppercased() {
         case "PAN": self = .pan
         case "MOU": self = .mou
         case "KAD": self = .kad

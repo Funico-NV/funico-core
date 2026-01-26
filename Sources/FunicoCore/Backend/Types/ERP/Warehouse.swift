@@ -38,7 +38,7 @@ extension Warehouse: APIEnum {
     }
     
     public init(apiValue: String) throws {
-        switch apiValue {
+        switch apiValue.uppercased() {
         case "DEM": self = .DEM
         case "FUN": self = .FUN
         case "LOT": self = .LOT

@@ -58,7 +58,7 @@ extension Quality: APIEnum {
     }
     
     public init(apiValue: String) throws {
-        switch apiValue {
+        switch apiValue.uppercased() {
         case "A": self = .A
         case "B": self = .B
         case "C": self = .C

@@ -38,7 +38,7 @@ extension MaterialGroup: APIEnum {
     }
     
     public init(apiValue: String) throws {
-        switch apiValue {
+        switch apiValue.uppercased() {
         case "METAL": self = .METAL
         case "PLASTIC": self = .PLASTIC
         case "PRINT": self = .PRINT
