@@ -22,6 +22,27 @@ extension Pool: Sendable {}
 
 extension Pool: CaseIterable {}
 
+extension Pool: Comparable, Strideable {
+    
+    public static func < (lhs: Pool, rhs: Pool) -> Bool {
+        return lhs.pool < rhs.pool
+    }
+    
+    public static func > (lhs: Pool, rhs: Pool) -> Bool {
+        return lhs.pool > rhs.pool
+    }
+    
+    public func advanced(by n: Int) -> Pool {
+        var result = self.pool
+        result += n
+        return Pool(pool: result) ?? Pool.lowest
+    }
+    
+    public func distance(to other: Pool) -> Int {
+        return other.pool - self.pool
+    }
+}
+
 extension Pool: APIEnum {
     
     public init(id: String) throws {
@@ -107,27 +128,6 @@ public extension Pool {
     init?(pool: Int?) {
         guard let pool else { return nil }
         try? self.init(apiValue: pool)
-    }
-}
-
-extension Pool: Comparable, Strideable {
-    
-    public static func < (lhs: Pool, rhs: Pool) -> Bool {
-        return lhs.pool < rhs.pool
-    }
-    
-    public static func > (lhs: Pool, rhs: Pool) -> Bool {
-        return lhs.pool > rhs.pool
-    }
-    
-    public func advanced(by n: Int) -> Pool {
-        var result = self.pool
-        result += n
-        return Pool(pool: result) ?? Pool.lowest
-    }
-    
-    public func distance(to other: Pool) -> Int {
-        return other.pool - self.pool
     }
 }
 

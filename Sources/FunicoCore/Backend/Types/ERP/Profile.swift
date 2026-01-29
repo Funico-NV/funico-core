@@ -25,9 +25,9 @@ extension Profile: Sendable {}
 
 extension Profile: CaseIterable {
     
-    static let profiles: [Profile] = [.pan, .mou, .kad, .bod, .bov]
+    public static let profiles: [Profile] = [.pan, .mou, .kad, .bod, .bov]
     
-    static let crosses: [Profile] = [.krs, .khk, .kht]
+    public static let crosses: [Profile] = [.krs, .khk, .kht]
 }
 
 extension Profile: APIEnum {
