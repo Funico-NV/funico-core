@@ -5,7 +5,7 @@
 //  Created by Damian Van de Kauter on 05/02/2024.
 //
 
-enum Dimension {
+public enum Dimension {
     
     case warehouse
     case location

@@ -141,7 +141,7 @@ public extension Profile {
     }
 }
 
-extension Profile {
+public extension Profile {
     
     var isProfile: Bool {
         return Profile.profiles.contains(self)
@@ -152,7 +152,7 @@ extension Profile {
     }
 }
 
-extension Optional where Wrapped == Profile {
+public extension Optional where Wrapped == Profile {
     
     var isProfile: Bool {
         return self?.isProfile ?? false

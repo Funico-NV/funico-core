@@ -140,7 +140,7 @@ extension DimensionGroup: Titleable {
     }
 }
 
-extension DimensionGroup {
+public extension DimensionGroup {
     
     var hasQuality: Bool {
         return [
@@ -153,7 +153,7 @@ extension DimensionGroup {
     }
 }
 
-extension DimensionGroup {
+public extension DimensionGroup {
     
     var dimensions: [Dimension] {
         switch self {

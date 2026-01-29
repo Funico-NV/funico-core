@@ -68,7 +68,7 @@ extension BomType: Titleable {
     }
 }
 
-extension BomType {
+public extension BomType {
     
     var isPhantom: Bool {
         switch self {
