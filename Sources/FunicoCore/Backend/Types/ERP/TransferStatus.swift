@@ -62,6 +62,25 @@ extension TransferStatus: APIEnum {
     }
 }
 
+extension TransferStatus {
+    
+    public init?(status: Int) {
+        switch status {
+        case 0: self = .created
+        case 1: self = .shipped
+        case 2: self = .delivered
+        default: return nil
+        }
+    }
+    public var status: Int {
+        switch self {
+        case .created: 0
+        case .shipped: 1
+        case .delivered: 2
+        }
+    }
+}
+
 extension TransferStatus: Titleable {
     
     public var title: String {
@@ -69,17 +88,6 @@ extension TransferStatus: Titleable {
         case .created: String(localized: "Created")
         case .shipped: String(localized: "Shipped")
         case .delivered: String(localized: "Delivered")
-        }
-    }
-}
-
-public extension TransferStatus {
-    
-    var status: Int {
-        switch self {
-        case .created: 0
-        case .shipped: 1
-        case .delivered: 2
         }
     }
 }

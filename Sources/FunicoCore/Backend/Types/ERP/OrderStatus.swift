@@ -89,6 +89,35 @@ extension OrderStatus: APIEnum {
     }
 }
 
+extension OrderStatus {
+    
+    public init?(status: Int) {
+        switch status {
+        case 0: self = .created
+        case 1: self = .estimated
+        case 2: self = .planned
+        case 3: self = .released
+        case 4: self = .started
+        case 5: self = .completed
+        case 6: self = .calculated
+        case 7: self = .terminated
+        default: return nil
+        }
+    }
+    public var status: Int {
+        switch self {
+        case .created: 0
+        case .estimated: 1
+        case .planned: 2
+        case .released: 3
+        case .started: 4
+        case .completed: 5
+        case .calculated: 6
+        case .terminated: 7
+        }
+    }
+}
+
 extension OrderStatus: Titleable {
     
     public var title: String {
@@ -101,22 +130,6 @@ extension OrderStatus: Titleable {
         case .completed: String(localized: "Completed")
         case .calculated: String(localized: "Calculated")
         case .terminated: String(localized: "Terminated")
-        }
-    }
-}
-
-public extension OrderStatus {
-    
-    var status: Int {
-        switch self {
-        case .created: 0
-        case .estimated: 1
-        case .planned: 2
-        case .released: 3
-        case .started: 4
-        case .completed: 5
-        case .calculated: 6
-        case .terminated: 7
         }
     }
 }

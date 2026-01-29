@@ -67,6 +67,27 @@ extension SalesStatus: APIEnum {
     }
 }
 
+extension SalesStatus {
+    
+    public init?(status: Int) {
+        switch status {
+        case 1: self = .pending
+        case 2: self = .delivered
+        case 3: self = .invoiced
+        case 4: self = .cancelled
+        default: return nil
+        }
+    }
+    public var status: Int {
+        switch self {
+        case .pending: 1
+        case .delivered: 2
+        case .invoiced: 3
+        case .cancelled: 4
+        }
+    }
+}
+
 extension SalesStatus: Titleable {
     
     public var title: String {
@@ -75,18 +96,6 @@ extension SalesStatus: Titleable {
         case .delivered: String(localized: "Delivered")
         case .invoiced: String(localized: "Invoiced")
         case .cancelled: String(localized: "Cancelled")
-        }
-    }
-}
-
-public extension SalesStatus {
-    
-    var status: Int {
-        switch self {
-        case .pending: 1
-        case .delivered: 2
-        case .invoiced: 3
-        case .cancelled: 4
         }
     }
 }

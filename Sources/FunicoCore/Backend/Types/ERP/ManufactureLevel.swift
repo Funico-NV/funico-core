@@ -98,6 +98,29 @@ extension ManufactureLevel: APIEnum {
     }
 }
 
+extension ManufactureLevel {
+    
+    public init?(indexLevel: Int) {
+        switch indexLevel {
+        case 0: self = .manufactureLevel_4HLF
+        case 1: self = .manufactureLevel_5HLF
+        case 2: self = .manufactureLevel_5PRF
+        case 3: self = .manufactureLevel_6HLF
+        case 4: self = .manufactureLevel_8HLF
+        default: return nil
+        }
+    }
+    public var indexLevel: Int {
+        switch self {
+        case .manufactureLevel_4HLF: 0
+        case .manufactureLevel_5HLF: 1
+        case .manufactureLevel_5PRF: 2
+        case .manufactureLevel_6HLF: 3
+        case .manufactureLevel_8HLF: 4
+        }
+    }
+}
+
 extension ManufactureLevel: Titleable {
     
     public var title: String {
