@@ -21,15 +21,15 @@ extension ManufactureLevel: CaseIterable {}
 extension ManufactureLevel: Equatable, Comparable, Strideable {
     
     public static func == (lhs: ManufactureLevel, rhs: ManufactureLevel) -> Bool {
-        return lhs.apiValue == rhs.apiValue
+        return lhs.reference == rhs.reference
     }
     
     public static func < (lhs: ManufactureLevel, rhs: ManufactureLevel) -> Bool {
-        return lhs.apiValue < rhs.apiValue
+        return lhs.reference < rhs.reference
     }
     
     public static func > (lhs: ManufactureLevel, rhs: ManufactureLevel) -> Bool {
-        return lhs.apiValue > rhs.apiValue
+        return lhs.reference > rhs.reference
     }
     
     public func advanced(by n: Int) -> ManufactureLevel {
