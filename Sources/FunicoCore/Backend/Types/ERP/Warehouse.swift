@@ -11,11 +11,17 @@ public enum Warehouse {
     case FUN
     case LOT
     case STEP
+    case other(String)
 }
 
 extension Warehouse: Sendable {}
 
-extension Warehouse: CaseIterable {}
+extension Warehouse: CaseIterable {
+    
+    public static var allCases: [Warehouse] {
+        [.DEM, .FUN, .LOT, .STEP]
+    }
+}
 
 extension Warehouse: APIEnum {
     
@@ -25,7 +31,14 @@ extension Warehouse: APIEnum {
         case "J17BWQ2EGR": self = .FUN
         case "WEXFS8FMU4": self = .LOT
         case "V6IT6FPMW4": self = .STEP
-        default: throw APIEnumError.invalidId(id, apiEnum: Self.self)
+        default:
+            if id.hasPrefix("PSR77UXPNT-") {
+                let warehouse = String(id.dropFirst("PSR77UXPNT-".count))
+                guard !warehouse.isEmpty else { throw APIEnumError.invalidId(id, apiEnum: Self.self) }
+                self = .other(warehouse)
+            } else {
+                throw APIEnumError.invalidId(id, apiEnum: Self.self)
+            }
         }
     }
     public var id: String {
@@ -34,6 +47,7 @@ extension Warehouse: APIEnum {
         case .FUN: "J17BWQ2EGR"
         case .LOT: "WEXFS8FMU4"
         case .STEP: "V6IT6FPMW4"
+        case .other(let warehouse): "PSR77UXPNT-\(warehouse)"
         }
     }
     
@@ -43,7 +57,9 @@ extension Warehouse: APIEnum {
         case "FUN": self = .FUN
         case "LOT": self = .LOT
         case "STEP": self = .STEP
-        default: throw APIEnumError.invalidApiValue(apiValue, apiEnum: Self.self)
+        default:
+            guard !apiValue.isEmpty else { throw APIEnumError.invalidApiValue(apiValue, apiEnum: Self.self) }
+            self = .other(apiValue)
         }
     }
     public var apiValue: String {
@@ -52,6 +68,7 @@ extension Warehouse: APIEnum {
         case .FUN: "FUN"
         case .LOT: "LOT"
         case .STEP: "STEP"
+        case .other(let warehouse): warehouse
         }
     }
 }
@@ -64,6 +81,7 @@ extension Warehouse: Titleable {
         case .FUN: String(localized: "FUN")
         case .LOT: String(localized: "LOT")
         case .STEP: String(localized: "STEP")
+        case .other(let warehouse): warehouse
         }
     }
 }
