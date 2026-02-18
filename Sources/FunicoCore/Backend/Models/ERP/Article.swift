@@ -140,15 +140,15 @@ extension Article: Identifiable, Hashable, Equatable, Comparable {
 public extension Article {
     
     func from(quality newQuality: Quality?) -> Self {
-        return .init(itemId, part: part, quality: newQuality, length: length)
+        return .init(itemId: itemId, part: part, quality: newQuality, length: length)
     }
     
     func from(part newPart: Part?) -> Self {
-        return .init(itemId, part: newPart, quality: quality, length: length)
+        return .init(itemId: itemId, part: newPart, quality: quality, length: length)
     }
     
     func from(length newLength: Float?) -> Self {
-        return .init(itemId, part: part, quality: quality, length: newLength)
+        return .init(itemId: itemId, part: part, quality: quality, length: newLength)
     }
 }
 
@@ -156,7 +156,7 @@ public extension Article {
     
     var reserved: Article {
         guard !itemId.hasSuffix("G") else { return self }
-        return .init(itemId.replacingOccurrences(of: "g", with: "") + "G", part: part, quality: quality, length: length)
+        return .init(itemId: itemId.replacingOccurrences(of: "g", with: "") + "G", part: part, quality: quality, length: length)
     }
 }
 
