@@ -60,10 +60,10 @@ extension BomType: Titleable {
     
     public var title: String {
         switch self {
-        case .item: String(localized: "Item")
-        case .phantom: String(localized: "Phantom")
-        case .production: String(localized: "Production")
-        case .supplier: String(localized: "Supplier")
+        case .item: String("Item")
+        case .phantom: String("Phantom")
+        case .production: String("Production")
+        case .supplier: String("Supplier")
         }
     }
 }

@@ -53,9 +53,9 @@ extension ItemType: Titleable {
     
     public var title: String {
         switch self {
-        case .item: String(localized: "Item")
-        case .bom: String(localized: "Bom")
-        case .service: String(localized: "Service")
+        case .item: String("Item")
+        case .bom: String("Bom")
+        case .service: String("Service")
         }
     }
 }

@@ -84,15 +84,15 @@ extension Dimension: Titleable {
     
     public var title: String {
         switch self {
-        case .warehouse: String(localized: "Warehouse")
-        case .location: String(localized: "Location")
-        case .quality: String(localized: "Quality")
-        case .choice: String(localized: "Choice")
-        case .serialnumber: String(localized: "Serial Number")
-        case .config: String(localized: "Configuration")
-        case .pallet: String(localized: "Pallet")
-        case .batch: String(localized: "Batch")
-        case .length: String(localized: "Length")
+        case .warehouse: String("Warehouse")
+        case .location: String("Location")
+        case .quality: String("Quality")
+        case .choice: String("Choice")
+        case .serialnumber: String("Serial Number")
+        case .config: String("Configuration")
+        case .pallet: String("Pallet")
+        case .batch: String("Batch")
+        case .length: String("Length")
         }
     }
 }

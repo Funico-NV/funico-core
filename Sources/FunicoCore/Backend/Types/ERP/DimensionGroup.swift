@@ -120,22 +120,22 @@ extension DimensionGroup: Titleable {
     
     public var title: String {
         switch self {
-        case .M: String(localized: "10")
-        case .M_L_1: String(localized: "11")
-        case .M_C: String(localized: "20")
-        case ._A: String(localized: "21")
-        case .M_C_K: String(localized: "30")
-        case .M_C_L_B: String(localized: "40")
-        case .M_K: String(localized: "50")
-        case .M_L_K: String(localized: "60")
-        case .C_M_B_L: String(localized: "C-M-B-L")
-        case .K_M_B_L: String(localized: "K-M-B-L")
-        case .K_M_L: String(localized: "K-M-L")
-        case .KPI: String(localized: "KPI")
-        case .M_B: String(localized: "M-B")
-        case .M_B_L: String(localized: "M-B-L")
-        case .M_B_L_SN: String(localized: "M-B-L-SN")
-        case .M_L: String(localized: "M-L")
+        case .M: String("10")
+        case .M_L_1: String("11")
+        case .M_C: String("20")
+        case ._A: String("21")
+        case .M_C_K: String("30")
+        case .M_C_L_B: String("40")
+        case .M_K: String("50")
+        case .M_L_K: String("60")
+        case .C_M_B_L: String("C-M-B-L")
+        case .K_M_B_L: String("K-M-B-L")
+        case .K_M_L: String("K-M-L")
+        case .KPI: String("KPI")
+        case .M_B: String("M-B")
+        case .M_B_L: String("M-B-L")
+        case .M_B_L_SN: String("M-B-L-SN")
+        case .M_L: String("M-L")
         }
     }
 }

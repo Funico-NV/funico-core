@@ -85,9 +85,9 @@ extension TransferStatus: Titleable {
     
     public var title: String {
         switch self {
-        case .created: String(localized: "Created")
-        case .shipped: String(localized: "Shipped")
-        case .delivered: String(localized: "Delivered")
+        case .created: String("Created")
+        case .shipped: String("Shipped")
+        case .delivered: String("Delivered")
         }
     }
 }

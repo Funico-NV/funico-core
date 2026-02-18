@@ -122,14 +122,14 @@ extension OrderStatus: Titleable {
     
     public var title: String {
         switch self {
-        case .created: String(localized: "Created")
-        case .estimated: String(localized: "Estimated")
-        case .planned: String(localized: "Planned")
-        case .released: String(localized: "Released")
-        case .started: String(localized: "Started")
-        case .completed: String(localized: "Completed")
-        case .calculated: String(localized: "Calculated")
-        case .terminated: String(localized: "Terminated")
+        case .created: String("Created")
+        case .estimated: String("Estimated")
+        case .planned: String("Planned")
+        case .released: String("Released")
+        case .started: String("Started")
+        case .completed: String("Completed")
+        case .calculated: String("Calculated")
+        case .terminated: String("Terminated")
         }
     }
 }

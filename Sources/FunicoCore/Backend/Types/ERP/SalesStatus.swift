@@ -92,10 +92,10 @@ extension SalesStatus: Titleable {
     
     public var title: String {
         switch self {
-        case .pending: String(localized: "Pending")
-        case .delivered: String(localized: "Delivered")
-        case .invoiced: String(localized: "Invoiced")
-        case .cancelled: String(localized: "Cancelled")
+        case .pending: String("Pending")
+        case .delivered: String("Delivered")
+        case .invoiced: String("Invoiced")
+        case .cancelled: String("Cancelled")
         }
     }
 }

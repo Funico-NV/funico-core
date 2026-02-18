@@ -184,7 +184,11 @@ extension Article: Titleable {
 extension Article: CustomDebugStringConvertible {
     
     public var debugDescription: String {
-        "<\(title)>: Article(itemId: \(itemId.debugDescription), part: \(part?.reference, default: "nil"), quality: \(quality?.reference, default: "nil"), length: \(length, default: "nil"))"
+        if let length {
+            "<\(title)>: Article(itemId: \(itemId.debugDescription), part: \(part?.reference ?? "nil"), quality: \(quality?.reference ?? "nil"), length: \(length))"
+        } else {
+            "<\(title)>: Article(itemId: \(itemId.debugDescription), part: \(part?.reference ?? "nil"), quality: \(quality?.reference ?? "nil"), length: \("nil"))"
+        }
     }
 }
 

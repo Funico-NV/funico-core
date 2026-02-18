@@ -55,9 +55,9 @@ extension PriceType: Titleable {
     
     public var title: String {
         switch self {
-        case .inventory: String(localized: "Inventory")
-        case .purchase: String(localized: "Purchase")
-        case .sale: String(localized: "Sale")
+        case .inventory: String("Inventory")
+        case .purchase: String("Purchase")
+        case .sale: String("Sale")
         }
     }
 }

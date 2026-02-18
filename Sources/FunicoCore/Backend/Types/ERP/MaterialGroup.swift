@@ -60,10 +60,10 @@ extension MaterialGroup: Titleable {
     
     public var title: String {
         switch self {
-        case .PLASTIC: String(localized: "Plastic")
-        case .METAL: String(localized: "Metal")
-        case .PRINT: String(localized: "Print")
-        case .SOLID: String(localized: "Solid")
+        case .PLASTIC: String("Plastic")
+        case .METAL: String("Metal")
+        case .PRINT: String("Print")
+        case .SOLID: String("Solid")
         }
     }
 }

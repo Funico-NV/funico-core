@@ -106,15 +106,15 @@ extension Pool: Titleable {
     
     public var title: String {
         switch self {
-        case .finishedEndProducts: String(localized: "Finished End Products")
-        case .sprayedEndProducts: String(localized: "Sprayed End Products")
-        case .assembledItems: String(localized: "Assembled Items")
-        case .disassembledItems: String(localized: "Disassembled Items")
-        case .ownManufactureProfiles: String(localized: "Own Manufacture Profiles")
-        case .finishedSemiFinishedProducts: String(localized: "Finished Semi-Finished Products")
-        case .unfinishedSemiFinishedProducts: String(localized: "Unfinished Semi-Finished Products")
-        case .roughWood: String(localized: "Rough Wood")
-        case .productionIndicators: String(localized: "Production Indicators")
+        case .finishedEndProducts: String("Finished End Products")
+        case .sprayedEndProducts: String("Sprayed End Products")
+        case .assembledItems: String("Assembled Items")
+        case .disassembledItems: String("Disassembled Items")
+        case .ownManufactureProfiles: String("Own Manufacture Profiles")
+        case .finishedSemiFinishedProducts: String("Finished Semi-Finished Products")
+        case .unfinishedSemiFinishedProducts: String("Unfinished Semi-Finished Products")
+        case .roughWood: String("Rough Wood")
+        case .productionIndicators: String("Production Indicators")
         }
     }
 }
