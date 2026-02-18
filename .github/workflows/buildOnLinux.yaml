@@ -1,0 +1,14 @@
+name: Linux
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: swift:6.2.0-jammy
+
+    steps:
+      - name: Build
+        run: swift build
