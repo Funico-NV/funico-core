@@ -110,7 +110,11 @@ extension Article: Sendable {}
 extension Article: Identifiable, Hashable, Equatable, Comparable {
     
     public var id: String {
-        return itemId + (part?.id ?? "") + (quality?.id ?? "") + (length?.formatted() ?? "")
+        let itemId = itemId.uppercased()
+        let part = part?.reference ?? ""
+        let quality = quality?.reference ?? ""
+        let length = length.map { String($0) } ?? ""
+        return "\(itemId)|\(part)|\(quality)|\(length)"
     }
     
     public func hash(into hasher: inout Hasher) {
