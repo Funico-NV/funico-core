@@ -11,7 +11,13 @@ public enum Warehouse {
     case FUN
     case LOT
     case STEP
-    case other(String)
+    
+    case customer(String, warehouse: String)
+    case returns(String, warehouse: String)
+    case transit(String, warehouse: String)
+    case quarantine(String, warehouse: String)
+    
+    case name(warehouse: String)
 }
 
 extension Warehouse: Sendable {}
@@ -32,13 +38,33 @@ extension Warehouse: APIEnum {
         case "WEXFS8FMU4": self = .LOT
         case "V6IT6FPMW4": self = .STEP
         default:
+            if id.hasPrefix("MBQEKWPE7L-") {
+                let warehouse = String(id.dropFirst("MBQEKWPE7L-".count))
+                guard let customerId = warehouse.customerId else { throw APIEnumError.invalidId(id, apiEnum: Self.self) }
+                self = .customer(customerId, warehouse: warehouse)
+            }
+            if id.hasPrefix("FH5XJIW63D-") {
+                let warehouse = String(id.dropFirst("FH5XJIW63D-".count))
+                guard let returnsWarehouse = warehouse.returnsWarehouse else { throw APIEnumError.invalidId(id, apiEnum: Self.self) }
+                self = .returns(returnsWarehouse, warehouse: warehouse)
+            } else
+            if id.hasPrefix("Q2AXL6AQIH-") {
+                let warehouse = String(id.dropFirst("Q2AXL6AQIH-".count))
+                guard let transitWarehouse = warehouse.transitWarehouse else { throw APIEnumError.invalidId(id, apiEnum: Self.self) }
+                self = .transit(transitWarehouse, warehouse: warehouse)
+            }
+            if id.hasPrefix("KOP7IPUEMZ-") {
+                let warehouse = String(id.dropFirst("KOP7IPUEMZ-".count))
+                guard let quarantineWarehouse = warehouse.quarantineWarehouse else { throw APIEnumError.invalidId(id, apiEnum: Self.self) }
+                self = .quarantine(quarantineWarehouse, warehouse: warehouse)
+            }
             if id.hasPrefix("PSR77UXPNT-") {
                 let warehouse = String(id.dropFirst("PSR77UXPNT-".count))
                 guard !warehouse.isEmpty else { throw APIEnumError.invalidId(id, apiEnum: Self.self) }
-                self = .other(warehouse)
-            } else {
-                throw APIEnumError.invalidId(id, apiEnum: Self.self)
+                self = .name(warehouse: warehouse)
             }
+            
+            throw APIEnumError.invalidId(id, apiEnum: Self.self)
         }
     }
     public var id: String {
@@ -47,7 +73,13 @@ extension Warehouse: APIEnum {
         case .FUN: "J17BWQ2EGR"
         case .LOT: "WEXFS8FMU4"
         case .STEP: "V6IT6FPMW4"
-        case .other(let warehouse): "PSR77UXPNT-\(warehouse)"
+            
+        case .customer(_, let warehouse): "MBQEKWPE7L-\(warehouse)"
+        case .returns(_, let warehouse): "FH5XJIW63D-\(warehouse)"
+        case .transit(_, let warehouse): "Q2AXL6AQIH-\(warehouse)"
+        case .quarantine(_, let warehouse): "KOP7IPUEMZ-\(warehouse)"
+            
+        case .name(let warehouse): "PSR77UXPNT-\(warehouse)"
         }
     }
     
@@ -59,7 +91,21 @@ extension Warehouse: APIEnum {
         case "STEP": self = .STEP
         default:
             guard !apiValue.isEmpty else { throw APIEnumError.invalidApiValue(apiValue, apiEnum: Self.self) }
-            self = .other(apiValue)
+            
+            if let customerId = apiValue.customerId {
+                self = .customer(customerId, warehouse: apiValue)
+            }
+            if let returnsWarehouse = apiValue.returnsWarehouse {
+                self = .returns(returnsWarehouse, warehouse: apiValue)
+            }
+            if let transitWarehouse = apiValue.transitWarehouse {
+                self = .transit(transitWarehouse, warehouse: apiValue)
+            }
+            if let quarantineWarehouse = apiValue.quarantineWarehouse {
+                self = .quarantine(quarantineWarehouse, warehouse: apiValue)
+            }
+            
+            self = .name(warehouse: apiValue)
         }
     }
     public var apiValue: String {
@@ -68,7 +114,13 @@ extension Warehouse: APIEnum {
         case .FUN: "FUN"
         case .LOT: "LOT"
         case .STEP: "STEP"
-        case .other(let warehouse): warehouse
+            
+        case .customer(let customerId, let warehouse): warehouse
+        case .returns(let returnsWarehouse, let warehouse): warehouse
+        case .transit(let transitWarehouse, let warehouse): warehouse
+        case .quarantine(let quarantineWarehouse, let warehouse): warehouse
+            
+        case .name(let warehouse): warehouse
         }
     }
 }
@@ -81,7 +133,56 @@ extension Warehouse: Titleable {
         case .FUN: String("FUN")
         case .LOT: String("LOT")
         case .STEP: String("STEP")
-        case .other(let warehouse): warehouse
+            
+        case .customer(let customerId, let warehouse): warehouse
+        case .returns(let returnsWarehouse, let warehouse): warehouse
+        case .transit(let transitWarehouse, let warehouse): warehouse
+        case .quarantine(let quarantineWarehouse, let warehouse): warehouse
+            
+        case .name(let warehouse): warehouse
         }
+    }
+}
+
+fileprivate extension String {
+    
+    var customerId: String? {
+        let cleanedString = self.uppercased()
+        
+        let customer = cleanedString.trimmingPrefix("KK").trimmingPrefix("K")
+        guard cleanedString.hasPrefix("K"), customer.allSatisfy({ $0.isNumber })
+        else { return nil }
+        
+        return String(customer)
+    }
+    
+    var returnsWarehouse: String? {
+        let cleanedString = self.uppercased()
+        
+        let returnsWarehouses = ["DVDEM", "KSDEM", "SA/CA DEM", "RETOURDEM", "RETOURLOT", "RETOURSTEP"]
+        guard returnsWarehouses.contains(cleanedString)
+        else { return nil }
+        
+        return self
+    }
+    
+    var transitWarehouse: String? {
+        let cleanedString = self.uppercased()
+        
+        let transitWarehouses = ["ANGOU-STEP", "BOURG-STEP", "ESS-STEP"]
+        guard transitWarehouses.contains(cleanedString)
+        else { return nil }
+        
+        return self
+    }
+    
+    var quarantineWarehouse: String? {
+        let cleanedString = self.uppercased()
+        
+        let quarantineWarehouses = ["MGMONTBREK", "MGPONTBREK", "MGZWARTREK", "QDEM", "QLOT"]
+        guard quarantineWarehouses.contains(cleanedString)
+        else { return nil }
+        
+        return self
     }
 }

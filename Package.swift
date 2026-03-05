@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "funico-core",
     platforms: [
-        .iOS(.v15), .macOS(.v12)
+        .iOS(.v15), .macOS(.v13)
     ],
     products: [
         .library(
