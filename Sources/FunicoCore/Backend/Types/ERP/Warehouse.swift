@@ -45,18 +45,18 @@ extension Warehouse: APIEnum {
             }
             if id.hasPrefix("FH5XJIW63D-") {
                 let warehouse = String(id.dropFirst("FH5XJIW63D-".count))
-                guard !warehouse.isEmpty else { throw APIEnumError.invalidId(id, apiEnum: Self.self) }
-                self = .returns(<#T##String#>, warehouse: warehouse)
+                guard let returnsWarehouse = warehouse.returnsWarehouse else { throw APIEnumError.invalidId(id, apiEnum: Self.self) }
+                self = .returns(returnsWarehouse, warehouse: warehouse)
             } else
             if id.hasPrefix("Q2AXL6AQIH-") {
                 let warehouse = String(id.dropFirst("Q2AXL6AQIH-".count))
-                guard !warehouse.isEmpty else { throw APIEnumError.invalidId(id, apiEnum: Self.self) }
-                self = .transit(<#T##String#>, warehouse: warehouse)
+                guard let transitWarehouse = warehouse.transitWarehouse else { throw APIEnumError.invalidId(id, apiEnum: Self.self) }
+                self = .transit(transitWarehouse, warehouse: warehouse)
             }
             if id.hasPrefix("KOP7IPUEMZ-") {
                 let warehouse = String(id.dropFirst("KOP7IPUEMZ-".count))
-                guard !warehouse.isEmpty else { throw APIEnumError.invalidId(id, apiEnum: Self.self) }
-                self = .quarantine(<#T##String#>, warehouse: warehouse)
+                guard let quarantineWarehouse = warehouse.quarantineWarehouse else { throw APIEnumError.invalidId(id, apiEnum: Self.self) }
+                self = .quarantine(quarantineWarehouse, warehouse: warehouse)
             }
             if id.hasPrefix("PSR77UXPNT-") {
                 let warehouse = String(id.dropFirst("PSR77UXPNT-".count))
@@ -147,22 +147,42 @@ extension Warehouse: Titleable {
 fileprivate extension String {
     
     var customerId: String? {
-        let customer = self.trimmingPrefix("KK").trimmingPrefix("K")
-        guard self.uppercased().hasPrefix("K"), customer.allSatisfy({ $0.isNumber })
+        let cleanedString = self.uppercased()
+        
+        let customer = cleanedString.trimmingPrefix("KK").trimmingPrefix("K")
+        guard cleanedString.hasPrefix("K"), customer.allSatisfy({ $0.isNumber })
         else { return nil }
         
         return String(customer)
     }
     
     var returnsWarehouse: String? {
+        let cleanedString = self.uppercased()
         
+        let returnsWarehouses = ["DVDEM", "KSDEM", "SA/CA DEM", "RETOURDEM", "RETOURLOT", "RETOURSTEP"]
+        guard returnsWarehouses.contains(cleanedString)
+        else { return nil }
+        
+        return self
     }
     
     var transitWarehouse: String? {
+        let cleanedString = self.uppercased()
         
+        let transitWarehouses = ["ANGOU-STEP", "BOURG-STEP", "ESS-STEP"]
+        guard transitWarehouses.contains(cleanedString)
+        else { return nil }
+        
+        return self
     }
     
     var quarantineWarehouse: String? {
+        let cleanedString = self.uppercased()
         
+        let quarantineWarehouses = ["MGMONTBREK", "MGPONTBREK", "MGZWARTREK", "QDEM", "QLOT"]
+        guard quarantineWarehouses.contains(cleanedString)
+        else { return nil }
+        
+        return self
     }
 }
