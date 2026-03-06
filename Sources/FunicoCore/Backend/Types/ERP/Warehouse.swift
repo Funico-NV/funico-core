@@ -29,6 +29,25 @@ extension Warehouse: CaseIterable {
     }
 }
 
+extension Warehouse: Comparable {
+    
+    public static func < (lhs: Warehouse, rhs: Warehouse) -> Bool {
+        
+        func sortKey(for warehouse: Warehouse) -> (Int, String) {
+            switch warehouse {
+            case .customer: return (2, warehouse.title)
+            case .returns: return (2, warehouse.title)
+            case .transit: return (2, warehouse.title)
+            case .quarantine: return (2, warehouse.title)
+            case .name: return (1, warehouse.title)
+            default: return (0, warehouse.title)
+            }
+        }
+        
+        return sortKey(for: lhs) < sortKey(for: rhs)
+    }
+}
+
 extension Warehouse: APIEnum {
     
     public init(id: String) throws {
