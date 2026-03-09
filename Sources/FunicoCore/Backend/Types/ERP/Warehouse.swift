@@ -58,32 +58,32 @@ extension Warehouse: APIEnum {
         case "V6IT6FPMW4": self = .STEP
         default:
             if id.hasPrefix("MBQEKWPE7L-") {
-                let warehouse = String(id.dropFirst("MBQEKWPE7L-".count))
+                let warehouse = String(id.trimmingPrefix("MBQEKWPE7L-"))
                 guard let customerId = warehouse.customerId else { throw APIEnumError.invalidId(id, apiEnum: Self.self) }
                 self = .customer(customerId, warehouse: warehouse)
-            }
+            } else
             if id.hasPrefix("FH5XJIW63D-") {
-                let warehouse = String(id.dropFirst("FH5XJIW63D-".count))
+                let warehouse = String(id.trimmingPrefix("FH5XJIW63D-"))
                 guard let returnsWarehouse = warehouse.returnsWarehouse else { throw APIEnumError.invalidId(id, apiEnum: Self.self) }
                 self = .returns(returnsWarehouse, warehouse: warehouse)
             } else
             if id.hasPrefix("Q2AXL6AQIH-") {
-                let warehouse = String(id.dropFirst("Q2AXL6AQIH-".count))
+                let warehouse = String(id.trimmingPrefix("Q2AXL6AQIH-"))
                 guard let transitWarehouse = warehouse.transitWarehouse else { throw APIEnumError.invalidId(id, apiEnum: Self.self) }
                 self = .transit(transitWarehouse, warehouse: warehouse)
-            }
+            } else
             if id.hasPrefix("KOP7IPUEMZ-") {
-                let warehouse = String(id.dropFirst("KOP7IPUEMZ-".count))
+                let warehouse = String(id.trimmingPrefix("KOP7IPUEMZ-"))
                 guard let quarantineWarehouse = warehouse.quarantineWarehouse else { throw APIEnumError.invalidId(id, apiEnum: Self.self) }
                 self = .quarantine(quarantineWarehouse, warehouse: warehouse)
-            }
+            } else
             if id.hasPrefix("PSR77UXPNT-") {
-                let warehouse = String(id.dropFirst("PSR77UXPNT-".count))
+                let warehouse = String(id.trimmingPrefix("PSR77UXPNT-"))
                 guard !warehouse.isEmpty else { throw APIEnumError.invalidId(id, apiEnum: Self.self) }
                 self = .name(warehouse: warehouse)
+            } else {
+                throw APIEnumError.invalidId(id, apiEnum: Self.self)
             }
-            
-            throw APIEnumError.invalidId(id, apiEnum: Self.self)
         }
     }
     public var id: String {
@@ -113,18 +113,18 @@ extension Warehouse: APIEnum {
             
             if let customerId = apiValue.customerId {
                 self = .customer(customerId, warehouse: apiValue)
-            }
+            } else
             if let returnsWarehouse = apiValue.returnsWarehouse {
                 self = .returns(returnsWarehouse, warehouse: apiValue)
-            }
+            } else
             if let transitWarehouse = apiValue.transitWarehouse {
                 self = .transit(transitWarehouse, warehouse: apiValue)
-            }
+            } else
             if let quarantineWarehouse = apiValue.quarantineWarehouse {
                 self = .quarantine(quarantineWarehouse, warehouse: apiValue)
+            } else {
+                self = .name(warehouse: apiValue)
             }
-            
-            self = .name(warehouse: apiValue)
         }
     }
     public var apiValue: String {
@@ -134,10 +134,10 @@ extension Warehouse: APIEnum {
         case .LOT: "LOT"
         case .STEP: "STEP"
             
-        case .customer(let customerId, let warehouse): warehouse
-        case .returns(let returnsWarehouse, let warehouse): warehouse
-        case .transit(let transitWarehouse, let warehouse): warehouse
-        case .quarantine(let quarantineWarehouse, let warehouse): warehouse
+        case .customer(_, let warehouse): warehouse
+        case .returns(_, let warehouse): warehouse
+        case .transit(_, let warehouse): warehouse
+        case .quarantine(_, let warehouse): warehouse
             
         case .name(let warehouse): warehouse
         }
@@ -153,10 +153,10 @@ extension Warehouse: Titleable {
         case .LOT: String("LOT")
         case .STEP: String("STEP")
             
-        case .customer(let customerId, let warehouse): warehouse
-        case .returns(let returnsWarehouse, let warehouse): warehouse
-        case .transit(let transitWarehouse, let warehouse): warehouse
-        case .quarantine(let quarantineWarehouse, let warehouse): warehouse
+        case .customer(_, let warehouse): warehouse
+        case .returns(_, let warehouse): warehouse
+        case .transit(_, let warehouse): warehouse
+        case .quarantine(_, let warehouse): warehouse
             
         case .name(let warehouse): warehouse
         }
