@@ -17,10 +17,11 @@ public extension SwiftSMTP.Mail {
     static func error(
         _ error: Error, project: String,
         from sender: Contact, to receivers: Contact...,
-        cc: Receivers? = nil, bcc: Receivers? = nil
+        cc: Receivers? = nil, bcc: Receivers? = nil,
+        severity: Severity = .critical
     ) -> Self {
         #if canImport(SwiftHTML)
-        return .init(
+        var mail = .init(
             from: sender, to: receivers, cc: cc, bcc: bcc,
             subject: "[\(project)] Foutmelding") {
                 HTMLDocument {
@@ -36,23 +37,23 @@ public extension SwiftSMTP.Mail {
                                                 .font(.title3)
                                                 .fontWeight(.bold)
                                                 .foregroundColor(.hex("#1F2A44"))
-
+                                            
                                             Spacer(height: 8)
-
+                                            
                                             Text("Er is een fout opgetreden.")
                                                 .font(.body)
                                                 .foregroundColor(.hex("#3D4B66"))
-
+                                            
                                             Spacer(height: 20)
-
+                                            
                                             Div {
                                                 Text("Foutdetails:")
                                                     .font(.caption)
                                                     .fontWeight(.semibold)
                                                     .foregroundColor(.hex("#6B7385"))
-
+                                                
                                                 Spacer(height: 6)
-
+                                                
                                                 Text(error.localizedDescription)
                                                     .font(.body)
                                                     .foregroundColor(.hex("#B42318"))
@@ -63,19 +64,19 @@ public extension SwiftSMTP.Mail {
                                                         .borderRadius("10px")
                                                     )
                                             }
-
+                                            
                                             Spacer(height: 50)
-
+                                            
                                             Text("Als dit probleem zich blijft voordoen, neem dan contact op met de ontwikkelaar.")
                                                 .font(.body)
                                                 .foregroundColor(.hex("#3D4B66"))
-
+                                            
                                             Spacer(height: 16)
-
+                                            
                                             Text("Bedankt,")
                                                 .font(.body)
                                                 .foregroundColor(.hex("#3D4B66"))
-
+                                            
                                             Text("Team Funico")
                                                 .font(.body)
                                                 .fontWeight(.semibold)
@@ -97,8 +98,11 @@ public extension SwiftSMTP.Mail {
                 .language("nl")
                 .style(.margin("0"), .padding("0"), .background("#F4F6FA"), .fontFamily("-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif"))
             }
+        mail.setPriority((severity == .critical) ? .high : .normal)
+        
+        return mail
         #else
-        return .init(
+        var mail = .init(
             from: sender, to: receivers, cc: cc, bcc: bcc,
             subject: project, text: """
             \(project) Error
@@ -108,6 +112,9 @@ public extension SwiftSMTP.Mail {
             Foutdetails:
             \(error.localizedDescription)
             """)
+        mail.setPriority((severity == .critical) ? .high : .normal)
+        
+        return mail
         #endif
     }
 }
