@@ -12,7 +12,7 @@ import SwiftSMTP
 import SwiftHTML
 #endif
 
-public extension SwiftSMTP.Mail {
+extension SwiftSMTP.Mail {
     
     /// Creates a preformatted error email for a project.
     ///
@@ -39,7 +39,7 @@ public extension SwiftSMTP.Mail {
     ///     severity: .critical
     /// )
     /// ```
-    static func error(
+    public static func error(
         _ error: Error, project: String,
         from sender: SwiftSMTP.Mail.Contact, to receivers: SwiftSMTP.Mail.Contact...,
         cc: SwiftSMTP.Mail.Receivers? = nil, bcc: SwiftSMTP.Mail.Receivers? = nil,
@@ -48,7 +48,7 @@ public extension SwiftSMTP.Mail {
         Self.error(error, project: project, from: sender, to: receivers, cc: cc, bcc: bcc, severity: severity)
     }
     
-    static func error(
+    public static func error(
         _ error: Error, project: String,
         from sender: SwiftSMTP.Mail.Contact, to receivers: [SwiftSMTP.Mail.Contact],
         cc: SwiftSMTP.Mail.Receivers? = nil, bcc: SwiftSMTP.Mail.Receivers? = nil,
