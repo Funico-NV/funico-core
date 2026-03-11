@@ -14,6 +14,31 @@ import SwiftHTML
 
 public extension SwiftSMTP.Mail {
     
+    /// Creates a preformatted error email for a project.
+    ///
+    /// The email uses an HTML template when `SwiftHTML` is available; otherwise it
+    /// falls back to a plain-text body. Priority is set to `.high` for critical
+    /// severity and `.normal` otherwise.
+    ///
+    /// - Parameters:
+    ///   - error: The error to describe in the email body.
+    ///   - project: The project name to include in the subject and content.
+    ///   - sender: The sender contact.
+    ///   - receivers: One or more primary recipients.
+    ///   - cc: Optional CC recipients.
+    ///   - bcc: Optional BCC recipients.
+    ///   - severity: The severity used to set email priority (defaults to `.critical`).
+    /// - Returns: A configured `SwiftSMTP.Mail` instance ready to send.
+    ///
+    /// ```swift
+    /// let mail = SwiftSMTP.Mail.error(
+    ///     someError,
+    ///     project: "Funico",
+    ///     from: sender,
+    ///     to: receiver,
+    ///     severity: .critical
+    /// )
+    /// ```
     static func error(
         _ error: Error, project: String,
         from sender: Contact, to receivers: Contact...,
