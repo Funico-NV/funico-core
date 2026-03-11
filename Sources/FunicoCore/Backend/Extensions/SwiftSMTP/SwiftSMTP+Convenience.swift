@@ -41,8 +41,17 @@ public extension SwiftSMTP.Mail {
     /// ```
     static func error(
         _ error: Error, project: String,
-        from sender: Contact, to receivers: Contact...,
-        cc: Receivers? = nil, bcc: Receivers? = nil,
+        from sender: SwiftSMTP.Mail.Contact, to receivers: SwiftSMTP.Mail.Contact...,
+        cc: SwiftSMTP.Mail.Receivers? = nil, bcc: SwiftSMTP.Mail.Receivers? = nil,
+        severity: Severity = .critical
+    ) -> Self {
+        Self.error(error, project: project, from: sender, to: receivers, cc: cc, bcc: bcc, severity: severity)
+    }
+    
+    static func error(
+        _ error: Error, project: String,
+        from sender: SwiftSMTP.Mail.Contact, to receivers: [SwiftSMTP.Mail.Contact],
+        cc: SwiftSMTP.Mail.Receivers? = nil, bcc: SwiftSMTP.Mail.Receivers? = nil,
         severity: Severity = .critical
     ) -> Self {
         #if canImport(SwiftHTML)
