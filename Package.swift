@@ -9,10 +9,7 @@ let package = Package(
         .iOS(.v15), .macOS(.v13)
     ],
     products: [
-        .library(
-            name: "FunicoCore",
-            targets: ["FunicoCore"]
-        )
+        .library(name: "FunicoCore", targets: ["FunicoCore"])
     ],
     targets: [
         .target(
