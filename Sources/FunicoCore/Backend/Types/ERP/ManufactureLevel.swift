@@ -121,6 +121,45 @@ extension ManufactureLevel {
     }
 }
 
+extension ManufactureLevel {
+    
+    /// Creates a `ManufactureLevel` from an article and ERP pool classification.
+    ///
+    /// The pool determines the base mapping. For `ownManufactureProfiles`, the second digit of the
+    /// article's item ID differentiates between PRF and HLF manufacture levels.
+    ///
+    /// - Important: In `ownManufactureProfiles`, article codes map as follows:
+    ///   *50xxx* and *52xxx* → PRF
+    ///   *55xxx* and *57xxx* → HFL
+    ///   This mapping is subject to change and must be updated accordingly.
+    ///
+    /// - Parameters:
+    ///   - article: The source article whose `itemId` is used to derive the manufacture level.
+    ///   - pool: The ERP pool used to select the manufacture level mapping.
+    ///
+    /// - Returns: A `ManufactureLevel` when the pool is supported and the `itemId` can be parsed;
+    ///   otherwise `nil`.
+    ///
+    /// ### Example
+    /// ```swift
+    /// let level = ManufactureLevel(article: article, pool: .ownManufactureProfiles)
+    /// ```
+    public init?(article: Article, pool: Pool) {
+        switch pool {
+        case .disassembledItems: self = .manufactureLevel_4HLF
+        case .ownManufactureProfiles:
+            if let secondDigit = article.itemId.dropFirst().first?.wholeNumberValue {
+                self = secondDigit < 5 ? .manufactureLevel_5PRF : .manufactureLevel_5HLF
+            } else {
+                return nil
+            }
+        case .finishedSemiFinishedProducts: self = .manufactureLevel_6HLF
+        case .roughWood: self = .manufactureLevel_8HLF
+        default: return nil
+        }
+    }
+}
+
 extension ManufactureLevel: Titleable {
     
     public var title: String {
