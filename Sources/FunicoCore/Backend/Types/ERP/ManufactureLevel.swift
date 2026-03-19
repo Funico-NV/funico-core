@@ -125,8 +125,9 @@ extension ManufactureLevel {
     
     /// Creates a `ManufactureLevel` from an article and ERP pool classification.
     ///
-    /// The pool determines the base mapping. For `ownManufactureProfiles`, the second digit of the
-    /// article's item ID differentiates between PRF and HLF manufacture levels.
+    /// The optional pool determines the base mapping. If `pool` is `nil`, the initializer returns
+    /// `nil` immediately. For `ownManufactureProfiles`, the second digit of the article's item ID
+    /// differentiates between PRF and HLF manufacture levels.
     ///
     /// - Important: In `ownManufactureProfiles`, article codes map as follows:
     ///   *50xxx* and *52xxx* → PRF
@@ -135,16 +136,18 @@ extension ManufactureLevel {
     ///
     /// - Parameters:
     ///   - article: The source article whose `itemId` is used to derive the manufacture level.
-    ///   - pool: The ERP pool used to select the manufacture level mapping.
+    ///   - pool: The optional ERP pool used to select the manufacture level mapping.
     ///
-    /// - Returns: A `ManufactureLevel` when the pool is supported and the `itemId` can be parsed;
-    ///   otherwise `nil`.
+    /// - Returns: A `ManufactureLevel` when the pool is non-`nil`, supported, and the `itemId` can be
+    ///   parsed; otherwise `nil`.
     ///
     /// ### Example
     /// ```swift
     /// let level = ManufactureLevel(article: article, pool: .ownManufactureProfiles)
     /// ```
-    public init?(article: Article, pool: Pool) {
+    public init?(article: Article, pool: Pool?) {
+        guard let pool else { return nil }
+        
         switch pool {
         case .disassembledItems: self = .manufactureLevel_4HLF
         case .ownManufactureProfiles:
