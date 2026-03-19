@@ -101,6 +101,30 @@ extension Profile: APIEnum {
     }
 }
 
+extension Profile {
+    
+    /// Creates a profile by matching a name that contains one of the profile references.
+    ///
+    /// The match is case-insensitive and searches within the provided `name` for any
+    /// `Profile.reference` value.
+    ///
+    /// - Parameter name: A string that may contain a profile reference such as "PAN" or "KAD".
+    /// - Returns: A `Profile` when a reference match is found; otherwise `nil`.
+    ///
+    /// Example:
+    /// ```swift
+    /// let profile = Profile(name: object.info.name)
+    /// ```
+    public init?(name: String) {
+        let uppercaseName = name.uppercased()
+        guard let profile = Profile.allCases.first(where: {
+            uppercaseName.contains($0.reference.uppercased())
+        }) else { return nil }
+        
+        self = profile
+    }
+}
+
 extension Profile: Titleable {
     
     public var title: String {
