@@ -205,26 +205,6 @@ public extension Article {
             return itemId
         }
     }
-    
-    var manufactureLevel: ManufactureLevel? {
-        guard let firstDigit = itemId.first?.wholeNumberValue else { return nil }
-        
-        if itemId.count >= 5 {
-            switch firstDigit {
-            case 4: return .manufactureLevel_4HLF
-            case 5:
-                if let secondDigit = itemId.dropFirst().first?.wholeNumberValue {
-                    return secondDigit < 5 ? .manufactureLevel_5PRF : .manufactureLevel_5HLF
-                }
-                return nil
-            case 6: return .manufactureLevel_6HLF
-            case 8: return .manufactureLevel_8HLF
-            default: return nil
-            }
-        } else {
-            return .manufactureLevel_6HLF
-        }
-    }
 }
 
 public extension Article {
