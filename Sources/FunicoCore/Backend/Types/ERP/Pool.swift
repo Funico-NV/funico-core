@@ -136,3 +136,15 @@ public extension Pool {
     static let lowest: Self = Pool.finishedEndProducts
     static let highest: Self = Pool.productionIndicators
 }
+
+public extension Pool {
+    
+    var isEndProduct: Bool {
+        switch self {
+        case .finishedEndProducts, .sprayedEndProducts:
+            return true
+        default:
+            return false
+        }
+    }
+}
