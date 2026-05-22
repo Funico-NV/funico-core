@@ -5,7 +5,7 @@
 //  Created by Damian Van de Kauter on 24/12/2025.
 //
 
-public enum Part: CaseIterable {
+public enum Part {
     
     case head
     case lthigh
@@ -16,6 +16,8 @@ public enum Part: CaseIterable {
 }
 
 extension Part: Sendable {}
+
+extension Part: CaseIterable {}
 
 extension Part: APIEnum {
     
