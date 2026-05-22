@@ -113,26 +113,50 @@ extension Profile: APIEnum {
 
 extension Profile {
     
-    /// Creates a profile by matching a name that contains one of the profile references.
+    /// Creates a profile by extracting a profile reference from a product name.
     ///
-    /// The match is case-insensitive and searches within the provided `name` for any
-    /// `Profile.reference` value.
+    /// The preferred matching strategy is an exact match against the dot-separated
+    /// components of the name. For example:
     ///
-    /// - Parameter name: A string that may contain a profile reference such as "PAN" or "KAD".
-    /// - Returns: A `Profile` when a reference match is found; otherwise `nil`.
-    ///
-    /// Example:
     /// ```swift
-    /// let profile = Profile(name: object.info.name)
+    /// Profile(name: "5PRF.LST.SIERPANEEL.EIK FRANS.2150X145X12")
+    /// // => .lijst
     /// ```
+    ///
+    /// Exact component matching prevents accidental substring matches such as
+    /// `"SIERPANEEL"` being interpreted as `.pan`.
+    ///
+    /// A secondary fallback performs a substring search across the entire name.
+    /// This exists to tolerate naming inconsistencies in the MRP system, where
+    /// users can manually edit product names and may accidentally remove or alter
+    /// separators (for example using `" ."` instead of `"."` or omitting separators
+    /// altogether). In those cases a best-effort profile detection is preferred
+    /// over returning `nil`.
+    ///
+    /// - Parameter name: The product name to inspect.
+    /// - Returns: The detected profile, or `nil` when no profile reference can be
+    ///   found.
+    ///
     public init?(name: String) {
         let uppercaseName = name.uppercased()
+        let nameComponents = uppercaseName.split(separator: ".")
+        let profilesByReference = Profile.profilesByReference
+        
+        if let profile = nameComponents.compactMap({ profilesByReference[String($0)] }).first {
+            self = profile
+            return
+        }
+        
         guard let profile = Profile.allCases.first(where: {
-            uppercaseName.contains($0.reference.uppercased())
+            uppercaseName.contains($0.reference)
         }) else { return nil }
         
         self = profile
     }
+    
+    private static let profilesByReference: [String: Profile] = {
+        Dictionary(uniqueKeysWithValues: Profile.allCases.map { ($0.reference, $0) })
+    }()
 }
 
 extension Profile: Titleable {
