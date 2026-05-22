@@ -20,7 +20,13 @@ public enum Pool {
 
 extension Pool: Sendable {}
 
-extension Pool: CaseIterable {}
+extension Pool: CaseIterable {
+    
+    public static let endProductCases: [Pool] = [
+        .finishedEndProducts,
+        .sprayedEndProducts
+    ]
+}
 
 extension Pool: Comparable, Strideable {
     
@@ -140,11 +146,6 @@ public extension Pool {
 public extension Pool {
     
     var isEndProduct: Bool {
-        switch self {
-        case .finishedEndProducts, .sprayedEndProducts:
-            return true
-        default:
-            return false
-        }
+        Pool.endProductCases.contains(self)
     }
 }
