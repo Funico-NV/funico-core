@@ -41,9 +41,19 @@ public enum ItemGroup {
 
 extension ItemGroup: Sendable {}
 
-extension ItemGroup: Comparable {}
+extension ItemGroup: CaseIterable {
+    
+    public static let endProductCases: [ItemGroup] = [
+        .KIST,
+        .KIST_HAND,
+        .HOL,
+        .ITA,
+        .URNES,
+        .CEREMONIE
+    ]
+}
 
-extension ItemGroup: CaseIterable {}
+extension ItemGroup: Comparable {}
 
 extension ItemGroup: APIEnum {
     
@@ -184,11 +194,6 @@ extension ItemGroup: Titleable {
 public extension ItemGroup {
     
     var isEndProduct: Bool {
-        switch self {
-        case .KIST, .KIST_HAND, .HOL, .ITA, .URNES, .CEREMONIE:
-            return true
-        default:
-            return false
-        }
+        ItemGroup.endProductCases.contains(self)
     }
 }
