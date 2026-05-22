@@ -25,9 +25,19 @@ extension Profile: Sendable {}
 
 extension Profile: CaseIterable {
     
-    public static let profiles: [Profile] = [.pan, .mou, .kad, .bod, .bov]
+    public static let profileCases: [Profile] = [
+        .pan,
+        .mou,
+        .kad,
+        .bod,
+        .bov
+    ]
     
-    public static let crosses: [Profile] = [.krs, .khk, .kht]
+    public static let crossCases: [Profile] = [
+        .krs,
+        .khk,
+        .kht
+    ]
 }
 
 extension Profile: APIEnum {
@@ -168,11 +178,11 @@ public extension Profile {
 public extension Profile {
     
     var isProfile: Bool {
-        return Profile.profiles.contains(self)
+        Profile.profileCases.contains(self)
     }
     
     var isCross: Bool {
-        return Profile.crosses.contains(self)
+        Profile.crossCases.contains(self)
     }
 }
 
