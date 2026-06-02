@@ -14,6 +14,8 @@ public enum ItemType {
 
 extension ItemType: Sendable {}
 
+extension ItemType: CaseIterable {}
+
 extension ItemType: APIEnum {
     
     public init(id: String) throws {
