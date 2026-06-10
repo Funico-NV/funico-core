@@ -9,6 +9,8 @@ import Foundation
 
 public protocol OrderSupplyModel: OrderModel, Articlable {
     
+    var order: Order { get }
+    
     var quantity: Supply { get set }
     
     var createdDate: Date { get }
