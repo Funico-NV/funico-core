@@ -9,18 +9,32 @@ let package = Package(
         .iOS(.v16), .macOS(.v13), .tvOS(.v16), .watchOS(.v9)
     ],
     products: [
-        .library(name: "FunicoCore", targets: ["FunicoCore"])
+        .library(name: "FunicoFoundation", targets: ["FunicoFoundation"]),
+        .library(name: "FunicoAPI", targets: ["FunicoAPI"]),
+        .library(name: "FunicoERP", targets: ["FunicoERP"])
     ],
     targets: [
         .target(
-            name: "FunicoCore",
+            name: "FunicoFoundation",
             resources: [
                 .process("Resources")
             ]
         ),
+        .target(
+            name: "FunicoAPI",
+            dependencies: ["FunicoFoundation", "FunicoERP"]
+        ),
         .testTarget(
-            name: "FunicoCoreTests",
-            dependencies: ["FunicoCore"]
+            name: "FunicoAPITests",
+            dependencies: ["FunicoAPI"]
+        ),
+        .target(
+            name: "FunicoERP",
+            dependencies: ["FunicoFoundation"]
+        ),
+        .testTarget(
+            name: "FunicoERPTests",
+            dependencies: ["FunicoERP"]
         )
     ]
 )
