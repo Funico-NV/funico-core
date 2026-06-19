@@ -10,6 +10,7 @@ let package = Package(
     ],
     products: [
         .library(name: "FunicoFoundation", targets: ["FunicoFoundation"]),
+        .library(name: "FunicoKit", targets: ["FunicoKit"]),
         .library(name: "FunicoAPI", targets: ["FunicoAPI"]),
         .library(name: "FunicoERP", targets: ["FunicoERP"])
     ],
@@ -19,6 +20,9 @@ let package = Package(
             resources: [
                 .process("Resources")
             ]
+        ),
+        .target(
+            name: "FunicoKit"
         ),
         .target(
             name: "FunicoAPI",
