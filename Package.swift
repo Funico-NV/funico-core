@@ -24,6 +24,10 @@ let package = Package(
         .target(
             name: "FunicoKit"
         ),
+        .testTarget(
+            name: "FunicoKitTests",
+            dependencies: ["FunicoKit"]
+        ),
         .target(
             name: "FunicoAPI",
             dependencies: ["FunicoFoundation", "FunicoERP"]

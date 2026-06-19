@@ -9,12 +9,43 @@ import Foundation
 
 public struct EnumParameters {
     
-    private var enumId: String
-    private var enumParameters: [EnumParameter]
+    public let enumId: String
+    public let enumParameters: [EnumParameter]
     
-    public init(_ enumId: String, parameters: EnumParameter...) {
+    public init(_ enumId: String, _ parameters: EnumParameter...) {
         self.enumId = enumId
         self.enumParameters = parameters
+    }
+    
+    public struct EnumParameter {
+        public let parameter: String
+        public let value: String
+        
+        public init(_ parameter: String, value: String) {
+            self.parameter = parameter
+            self.value = value
+        }
+        
+        public init<Value: LosslessStringConvertible>(_ parameter: String, value: Value) {
+            self.parameter = parameter
+            self.value = value.description
+        }
+        
+        public init<Value: IDExtractable>(_ value: Value) {
+            self.parameter = String(describing: Value.self)
+            self.value = value.id.description
+        }
+        
+        public static func parameter<Value: IDExtractable>(_ value: Value) -> Self {
+            .init(value)
+        }
+    }
+}
+
+extension EnumParameters: IDExtractable {
+    
+    public var id: String {
+        enumId + "&" + enumParameters.map({ "\($0.parameter)=\($0.value)" }).joined(separator: ",")
     }
     
     public init?(id: String) {
@@ -36,23 +67,6 @@ public struct EnumParameters {
         self.enumId = enumId
         self.enumParameters = enumParameters
     }
-    
-    public struct EnumParameter {
-        internal var parameter: String
-        internal var value: String
-        
-        public init(_ parameter: String, value: String) {
-            self.parameter = parameter
-            self.value = value
-        }
-    }
-}
-
-extension EnumParameters: Identifiable {
-    
-    public var id: String {
-        enumId + "&" + enumParameters.map({ "\($0.parameter)=\($0.value)" }).joined(separator: ",")
-    }
 }
 
 public extension EnumParameters {
@@ -63,5 +77,22 @@ public extension EnumParameters {
     
     func parameter(for parameter: String) -> EnumParameter? {
         enumParameters.first(where: { $0.parameter == parameter })
+    }
+    
+    func parameter<Value: IDExtractable>(_ type: Value.Type = Value.self) -> Value? {
+        let parameter = String(describing: Value.self)
+        
+        guard let rawValue = self.parameter(for: parameter)?.value,
+              let id = Value.ID(rawValue)
+        else {
+            return nil
+        }
+        
+        return Value(id: id)
+    }
+    
+    func value<Value: LosslessStringConvertible>(for parameter: String, as type: Value.Type = Value.self) -> Value? {
+        guard let rawValue = self.parameter(for: parameter)?.value else { return nil }
+        return Value(rawValue)
     }
 }
