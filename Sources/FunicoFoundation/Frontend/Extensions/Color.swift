@@ -5,7 +5,7 @@
 //  Created by Damian Van de Kauter on 03/03/2026.
 //
 
-#if canImport(SwiftUI)
+#if canImport(SwiftUI) && SwiftUIExtensions
 import SwiftUI
 
 public extension Color {
