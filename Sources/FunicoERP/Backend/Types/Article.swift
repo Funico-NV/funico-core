@@ -27,25 +27,25 @@ public struct Article: Codable {
         }
         set { _quality = newValue?.erpCode }
     }
-    public var length: Float?
+    public var itemLength: Float?
     
-    fileprivate init(itemId: String, part: Part?, quality: Quality?, length: Float?) {
+    fileprivate init(itemId: String, part: Part?, quality: Quality?, itemLength: Float?) {
         self.itemId = itemId
         self._part = part?.erpCode
         self.part = part
         self._quality = quality?.erpCode
         self.quality = quality
-        self.length = length
+        self.itemLength = itemLength
     }
     
-    public init(_ itemId: String, part: Part? = nil, quality: Quality? = nil, length: Float? = nil) {
-        self.init(itemId: itemId, part: part, quality: quality, length: length)
+    public init(_ itemId: String, part: Part? = nil, quality: Quality? = nil, itemLength: Float? = nil) {
+        self.init(itemId: itemId, part: part, quality: quality, itemLength: itemLength)
     }
     
-    public init?(_ itemId: String?, part: Part? = nil, quality: Quality? = nil, length: Float? = nil) {
+    public init?(_ itemId: String?, part: Part? = nil, quality: Quality? = nil, itemLength: Float? = nil) {
         guard let itemId else { return nil }
         
-        self.init(itemId: itemId, part: part, quality: quality, length: length)
+        self.init(itemId: itemId, part: part, quality: quality, itemLength: itemLength)
     }
     
     public init(from decoder: Decoder) throws {
@@ -54,7 +54,7 @@ public struct Article: Codable {
         self.itemId = try values.decode(String.self, forKey: .itemId)
         self._part = try values.decodeIfPresent(String.self, forKey: ._part)
         self._quality = try values.decodeIfPresent(String.self, forKey: ._quality)
-        self.length = try values.decodeIfPresent(Float.self, forKey: .length)
+        self.itemLength = try values.decodeIfPresent(Float.self, forKey: .itemLength)
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -63,7 +63,7 @@ public struct Article: Codable {
         try container.encode(itemId, forKey: .itemId)
         try container.encodeIfPresent(_part, forKey: ._part)
         try container.encodeIfPresent(_quality, forKey: ._quality)
-        try container.encodeIfPresent(length, forKey: .length)
+        try container.encodeIfPresent(itemLength, forKey: .itemLength)
     }
 }
 
@@ -89,20 +89,20 @@ extension Article: ExpressibleByStringLiteral, ExpressibleByIntegerLiteral {
         let qualityComponent: Quality? = Quality(reference: qualityString)
         
         if let partComponent, let qualityComponent {
-            self.init(itemId: itemIdComponent, part: partComponent, quality: qualityComponent, length: lengthComponent)
+            self.init(itemId: itemIdComponent, part: partComponent, quality: qualityComponent, itemLength: lengthComponent)
         } else
         if let partComponent {
-            self.init(itemId: itemIdComponent, part: partComponent, quality: nil, length: lengthComponent)
+            self.init(itemId: itemIdComponent, part: partComponent, quality: nil, itemLength: lengthComponent)
         } else
         if let qualityComponent {
-            self.init(itemId: itemIdComponent, part: nil, quality: qualityComponent, length: lengthComponent)
+            self.init(itemId: itemIdComponent, part: nil, quality: qualityComponent, itemLength: lengthComponent)
         } else {
-            self.init(itemId: itemString, part: nil, quality: nil, length: lengthComponent)
+            self.init(itemId: itemString, part: nil, quality: nil, itemLength: lengthComponent)
         }
     }
     
     public init(integerLiteral value: IntegerLiteralType) {
-        self.init(itemId: String(value), part: nil, quality: nil, length: nil)
+        self.init(itemId: String(value), part: nil, quality: nil, itemLength: nil)
     }
 }
 
@@ -114,7 +114,7 @@ extension Article: Identifiable, Hashable, Equatable, Comparable {
         let itemId = itemId.uppercased()
         let part = part?.reference ?? ""
         let quality = quality?.reference ?? ""
-        let length = length.map { String($0) } ?? ""
+        let length = itemLength.map { String($0) } ?? ""
         return "\(itemId)|\(part)|\(quality)|\(length)"
     }
     
@@ -122,7 +122,7 @@ extension Article: Identifiable, Hashable, Equatable, Comparable {
         hasher.combine(itemId.uppercased())
         hasher.combine(part)
         hasher.combine(quality)
-        hasher.combine(length)
+        hasher.combine(itemLength)
     }
     
     public static func == (lhs: Article, rhs: Article) -> Bool {
@@ -130,14 +130,14 @@ extension Article: Identifiable, Hashable, Equatable, Comparable {
             (lhs.itemId.uppercased() == rhs.itemId.uppercased()) &&
             (lhs.part == rhs.part) &&
             (lhs.quality == rhs.quality) &&
-            (lhs.length == rhs.length)
+            (lhs.itemLength == rhs.itemLength)
         )
     }
     
     public static func < (lhs: Article, rhs: Article) -> Bool {
         return (
-            (lhs.itemId.uppercased() + (lhs.quality?.title ?? "") + (lhs.part?.reference ?? "") + (lhs.length?.formatted() ?? "")) <
-            (rhs.itemId.uppercased() + (rhs.quality?.title ?? "") + (rhs.part?.reference ?? "") + (lhs.length?.formatted() ?? ""))
+            (lhs.itemId.uppercased() + (lhs.quality?.title ?? "") + (lhs.part?.reference ?? "") + (lhs.itemLength?.formatted() ?? "")) <
+            (rhs.itemId.uppercased() + (rhs.quality?.title ?? "") + (rhs.part?.reference ?? "") + (lhs.itemLength?.formatted() ?? ""))
         )
     }
 }
@@ -145,15 +145,15 @@ extension Article: Identifiable, Hashable, Equatable, Comparable {
 public extension Article {
     
     func from(quality newQuality: Quality?) -> Self {
-        return .init(itemId: itemId, part: part, quality: newQuality, length: length)
+        return .init(itemId: itemId, part: part, quality: newQuality, itemLength: itemLength)
     }
     
     func from(part newPart: Part?) -> Self {
-        return .init(itemId: itemId, part: newPart, quality: quality, length: length)
+        return .init(itemId: itemId, part: newPart, quality: quality, itemLength: itemLength)
     }
     
-    func from(length newLength: Float?) -> Self {
-        return .init(itemId: itemId, part: part, quality: quality, length: newLength)
+    func from(itemLength newLength: Float?) -> Self {
+        return .init(itemId: itemId, part: part, quality: quality, itemLength: newLength)
     }
 }
 
@@ -161,7 +161,7 @@ public extension Article {
     
     var reserved: Article {
         guard !itemId.hasSuffix("G") else { return self }
-        return .init(itemId: itemId.replacingOccurrences(of: "g", with: "") + "G", part: part, quality: quality, length: length)
+        return .init(itemId: itemId.replacingOccurrences(of: "g", with: "") + "G", part: part, quality: quality, itemLength: itemLength)
     }
 }
 
@@ -174,8 +174,8 @@ extension Article: Titleable {
             return itemId + part.reference
         } else if let quality {
             return itemId + "-" + quality.title
-        } else if let length, showLength {
-            return itemId + " | " + length.formatted(.length)
+        } else if let itemLength, showLength {
+            return itemId + " | " + itemLength.formatted(.length)
         } else {
             return itemId
         }
@@ -189,10 +189,10 @@ extension Article: Titleable {
 extension Article: CustomDebugStringConvertible {
     
     public var debugDescription: String {
-        if let length {
-            "<\(title)>: Article(itemId: \(itemId.debugDescription), part: \(part?.reference ?? "nil"), quality: \(quality?.reference ?? "nil"), length: \(length))"
+        if let itemLength {
+            "<\(title)>: Article(itemId: \(itemId.debugDescription), part: \(part?.reference ?? "nil"), quality: \(quality?.reference ?? "nil"), itemLength: \(itemLength))"
         } else {
-            "<\(title)>: Article(itemId: \(itemId.debugDescription), part: \(part?.reference ?? "nil"), quality: \(quality?.reference ?? "nil"), length: \("nil"))"
+            "<\(title)>: Article(itemId: \(itemId.debugDescription), part: \(part?.reference ?? "nil"), quality: \(quality?.reference ?? "nil"), itemLength: \("nil"))"
         }
     }
 }
@@ -244,6 +244,7 @@ extension Article {
         
         case _part
         case _quality
-        case length
+        /// Stored under its pre-3.0 name so existing configurations and fixtures keep decoding.
+        case itemLength = "length"
     }
 }
