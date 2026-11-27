@@ -13,7 +13,8 @@ public protocol Articlable {
     var itemId: String { get }
     var part: RawPart? { get }
     var quality: RawQuality? { get }
-    var length: Float? { get }
+    /// The length that is part of the article key (dimension `BE55DVDWFS`).
+    var itemLength: Float? { get }
 }
 
 public extension Articlable {
@@ -22,6 +23,6 @@ public extension Articlable {
         let part: Part? = part.flatMap({ try? Part(erpCode: $0) })
         let quality: Quality? = quality.flatMap({ try? Quality(erpCode: $0) })
         
-        return Article(itemId, part: part, quality: quality, length: length)
+        return Article(itemId, part: part, quality: quality, itemLength: itemLength)
     }
 }
